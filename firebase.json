@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "public": "airball/dist/airball",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
