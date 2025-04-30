@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "airball-shot-tracker"
-  }
+    "default": "airball-shot-tracker",
+    "airball": "airball-st"
+  },
+  "targets": {},
+  "etags": {}
 }
