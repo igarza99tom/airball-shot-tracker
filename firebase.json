@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "airball/dist/airball",
+    "public": "airball/dist/airball/browser",
     "ignore": [
       "firebase.json",
       "**/.*",
