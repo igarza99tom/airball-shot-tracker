@@ -29,7 +29,7 @@ A progressive web application for tracking shooting percentages across simple 14
 
 ## Installation
 
-Visit [app-url] on your mobile device and use the browser's "Add to Home Screen" option.
+Visit <https://airball-st.web.app> on your mobile device and use the browser's "Add to Home Screen" option.
 
 ## Local Development
 
