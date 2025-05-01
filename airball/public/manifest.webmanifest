@@ -1,11 +1,13 @@
 {
-  "name": "airball",
-  "short_name": "airball",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "name": "Airball Shot Tracker",
+  "short_name": "Airball",
+  "theme_color": "#ff7700",
+  "background_color": "#ffffff",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "description": "Track basketball shooting percentages across court locations",
+
   "icons": [
     {
       "src": "icons/icon-72x72.png",

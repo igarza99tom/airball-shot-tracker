@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SectionInfoComponent } from './section-info.component';
+import { StatsDisplayComponent } from './stats-display.component';
 
-describe('SectionInfoComponent', () => {
-  let component: SectionInfoComponent;
-  let fixture: ComponentFixture<SectionInfoComponent>;
+describe('StatsDisplayComponent', () => {
+  let component: StatsDisplayComponent;
+  let fixture: ComponentFixture<StatsDisplayComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [SectionInfoComponent]
+      imports: [StatsDisplayComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(SectionInfoComponent);
+    fixture = TestBed.createComponent(StatsDisplayComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
