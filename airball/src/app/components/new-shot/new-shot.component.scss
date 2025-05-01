@@ -1,0 +1,85 @@
+.shot-card-container {
+    width: 100%;
+    margin: 0 auto;
+    perspective: 1000px;
+  }
+  
+  .card {
+    position: relative;
+    width: 100%;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 20px;
+    touch-action: none;
+    user-select: none;
+    overflow: hidden;
+    cursor: grab;
+    
+    &:active {
+      cursor: grabbing;
+    }
+  }
+  
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+    
+    &.make {
+      right: 0;
+      color: #2ecc71;
+      transform: translateX(30%);
+    }
+    
+    &.miss {
+      left: 0;
+      color: #e74c3c;
+      transform: translateX(-30%);
+    }
+  }
+  
+  .card.swiping-right .card-overlay.make,
+  .card.swiping-left .card-overlay.miss {
+    opacity: 0.8;
+  }
+  
+  .card-content {
+    min-height: 80px;
+    text-align: center;
+    z-index: 1;
+    
+    h2 {
+      color: #333;
+      margin-bottom: 15px;
+      font-size: 20px;
+    }
+    
+    .swipe-hint {
+      color: #888;
+      font-style: italic;
+      margin-top: 15px;
+      font-size: 14px;
+      
+      .swipe-arrow {
+        font-size: 24px;
+        margin-top: 5px;
+        animation: pulse 1.5s infinite;
+      }
+    }
+  }
+  
+  @keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+  }

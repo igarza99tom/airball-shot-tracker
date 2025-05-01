@@ -1,1 +1,42 @@
-<p>court works!</p>
+<div class="court-container">
+    <svg viewBox="0 0 400 300" class="basketball-court">
+      <!-- Court outline -->
+      <rect x="0" y="0" width="400" height="300" fill="#f5d485" stroke="#000" stroke-width="2" />
+      
+      <!-- Three point line -->
+      <path d="M 50,250 A 150,150 0 0,1 350,250" fill="none" stroke="#000" stroke-width="2" />
+      
+      <!-- Free throw circle -->
+      <circle cx="200" cy="200" r="50" fill="none" stroke="#000" stroke-width="2" />
+      
+      <!-- Free throw line -->
+      <line x1="150" y1="200" x2="250" y2="200" stroke="#000" stroke-width="2" />
+      
+      <!-- Basket -->
+      <circle cx="200" cy="270" r="10" fill="none" stroke="#000" stroke-width="2" />
+      
+      <!-- Section markers -->
+      @for (section of courtSections; track section.id) {
+        <circle 
+          [attr.cx]="section.x" 
+          [attr.cy]="section.y" 
+          r="15" 
+          [attr.fill]="selectedSection === section.id ? 'rgba(255,119,0,0.8)' : 'rgba(255,119,0,0.5)'" 
+          stroke="#000" 
+          stroke-width="1" 
+          [attr.data-section]="section.id"
+          (click)="selectSection(section.id)"
+          class="section-marker"
+        />
+        <text 
+          [attr.x]="section.x" 
+          [attr.y]="section.y" 
+          font-size="12" 
+          text-anchor="middle" 
+          alignment-baseline="middle"
+          fill="#000"
+          pointer-events="none"
+        >{{section.id}}</text>
+      }
+    </svg>
+  </div>

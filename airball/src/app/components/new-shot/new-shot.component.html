@@ -1,1 +1,14 @@
-<p>new-shot works!</p>
+<div class="shot-card-container">    
+    <div class="card" #swipeCard (mousedown)="startDrag($event)" (touchstart)="startDrag($event)">
+      <div class="card-overlay make">MAKE</div>
+      <div class="card-overlay miss">MISS</div>
+      
+      <div class="card-content">
+        <h2>New Shot</h2>
+        <div class="swipe-hint">
+          <p>Swipe right for make, left for miss</p>
+          <div class="swipe-arrow">⟷</div>
+        </div>
+      </div>
+    </div>
+  </div>

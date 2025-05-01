@@ -1,0 +1,129 @@
+.stats-container {
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .stats-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    margin-bottom: 15px;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+    
+    h2 {
+      color: #333;
+      font-size: 18px;
+      margin: 0 0 15px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+  }
+  
+  .stat-grid {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  
+  .stat-item {
+    flex: 1;
+    padding: 0 5px;
+    
+    .stat-value {
+      font-size: 24px;
+      font-weight: bold;
+      color: #ff7700;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #777;
+      margin-top: 5px;
+    }
+  }
+  
+  .last-session {
+    text-align: center;
+    color: #888;
+    font-style: italic;
+    font-size: 12px;
+  }
+  
+  .shooting-list {
+    .shooting-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+    
+    .location-info {
+      display: flex;
+      align-items: center;
+      
+      .location-id {
+        background: #ff7700;
+        color: white;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 10px;
+        font-weight: bold;
+        font-size: 12px;
+      }
+      
+      .location-name {
+        font-size: 14px;
+      }
+    }
+    
+    .shooting-data {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      min-width: 120px;
+      
+      .shooting-fraction {
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 3px;
+      }
+    }
+    
+    .percentage-bar-container {
+      width: 80px;
+      height: 6px;
+      background: #f0f0f0;
+      border-radius: 3px;
+      position: relative;
+      overflow: hidden;
+      
+      .percentage-bar {
+        height: 100%;
+        background: #ff7700;
+        border-radius: 3px;
+      }
+      
+      .percentage-text {
+        position: absolute;
+        right: -25px;
+        top: -4px;
+        font-size: 10px;
+        color: #333;
+        font-weight: 500;
+      }
+    }
+  }
