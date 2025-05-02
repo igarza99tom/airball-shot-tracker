@@ -1,42 +1,72 @@
 <div class="court-container">
-    <svg viewBox="0 0 400 300" class="basketball-court">
+  <svg viewBox="0 0 640 480" class="basketball-court">
+    <!-- Base court layer -->
+    <g class="court-base">
       <!-- Court outline -->
-      <rect x="0" y="0" width="400" height="300" fill="#f5d485" stroke="#000" stroke-width="2" />
+      <rect fill="none" height="458.21" stroke="#000000" stroke-width="5" width="532.84" x="47.9" y="9.38" />
       
-      <!-- Three point line -->
-      <path d="M 50,250 A 150,150 0 0,1 350,250" fill="none" stroke="#000" stroke-width="2" />
+      <!-- Center circle -->
+      <path d="M 379,9.39 C 379,44.26 350.74,72.52 315.87,72.52 281,72.52 252.74,44.26 252.74,9.39" fill="none" stroke="#000000" stroke-width="5" />
       
       <!-- Free throw circle -->
-      <circle cx="200" cy="200" r="50" fill="none" stroke="#000" stroke-width="2" />
+      <path d="m 248.87,281.25 c 0,-36.72 29.76,-66.48 66.48,-66.48 36.72,0 66.48,29.76 66.48,66.48" fill="none" stroke="#000000" stroke-width="5" />
+      <path d="m 381.83,281.25 c 0,36.72 -29.76,66.48 -66.48,66.48 -36.72,0 -66.48,-29.76 -66.48,-66.48" fill="none" stroke="#000000" stroke-width="4" stroke-dasharray="16, 8" />
       
-      <!-- Free throw line -->
-      <line x1="150" y1="200" x2="250" y2="200" stroke="#000" stroke-width="2" />
+      <!-- Painted area -->
+      <path d="M 230.68,467.5 V 282.06 h 168.27 v 185.45" fill="none" stroke="#000000" stroke-width="5" />
       
-      <!-- Basket -->
-      <circle cx="200" cy="270" r="10" fill="none" stroke="#000" stroke-width="2" />
+      <!-- Restricted area -->
+      <path d="m 269.77,441.72 v -22.56 c 0,-22.54 20.2,-40.82 45.13,-40.82 24.92,0 45.13,18.27 45.13,40.82 v 22.86" fill="none" stroke="#000000" stroke-width="4" />
       
-      <!-- Section markers -->
-      @for (section of courtSections; track section.id) {
-        <circle 
-          [attr.cx]="section.x" 
-          [attr.cy]="section.y" 
-          r="15" 
-          [attr.fill]="selectedSection === section.id ? 'rgba(255,119,0,0.8)' : 'rgba(255,119,0,0.5)'" 
-          stroke="#000" 
-          stroke-width="1" 
-          [attr.data-section]="section.id"
-          (click)="selectSection(section.id)"
-          class="section-marker"
-        />
-        <text 
-          [attr.x]="section.x" 
-          [attr.y]="section.y" 
-          font-size="12" 
-          text-anchor="middle" 
-          alignment-baseline="middle"
-          fill="#000"
-          pointer-events="none"
-        >{{section.id}}</text>
-      }
-    </svg>
-  </div>
+      <!-- 3pt line -->
+      <path d="m 93.99,467.43 c -1.78,-75.6 -0.48,-75.49 -1.33,-128.91 -0.42,-26.07 85.82,-154.34 217.83,-154.34 143.43,0 223.35,125.23 223.72,152.33 l 1.77,131.13" fill="none" stroke="#000000" stroke-width="5" />
+      
+      <!-- Hoop -->
+      <path d="M 314.56,438.36 314.41,443.03 M 329.4,423.88 c 0,8.1 -6.56,14.66 -14.66,14.66 -8.1,0 -14.66,-6.56 -14.66,-14.66 0,-8.1 6.56,-14.66 14.66,-14.66 8.1,0 14.66,6.56 14.66,14.66 z" fill="none" stroke="#000000" stroke-width="3" />
+      <line fill="none" stroke="#000000" stroke-width="4" x1="286.87" x2="342.83" y1="443.07" y2="443.07" />
+    </g>
+    
+    <!-- Shooting sections layer -->
+    <g class="shooting-sections">
+      <!-- Short 2pt sections -->
+      <path class="section-line" d="m 249.63,467.85 c -16.59,-14.58 -25.45,-32.63 -25.45,-54.9 0,-44.5 40.98,-80.58 91.54,-80.58 50.55,0 91.54,36.07 91.54,80.58 0,22.28 -11.69,40.33 -28.3,54.92" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="m 260.17,347.74 -25.25,-72.75" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="M 368.75,347.75 394,275" fill="none" stroke="#000000" stroke-width="3" />
+      
+      <!-- Long 2pt sections -->
+      <path class="section-line" d="m 152.49,467.68 c -7.57,-17.94 -8.19,-32.88 -8.19,-53.32 0,-87.45 76.12,-158.34 170.01,-158.34 93.89,0 170.01,70.89 170.01,158.34 0,20.36 -2.56,35.58 -10.08,53.46" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="m 174,324.75 -52.25,-40.5" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="m 453.84,322.94 52.25,-40.5" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="m 251.02,268.7 -21.92,-68.59" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="m 375.68,267.55 21.92,-68.59" fill="none" stroke="#000000" stroke-width="3" />
+      
+      <!-- 3pt section lines -->
+      <path class="section-line" d="m 94.2,467.28 c -1.78,-75.6 -0.48,-75.49 -1.33,-128.91 -0.42,-26.07 85.82,-154.34 217.83,-154.34 143.43,0 223.35,125.23 223.72,152.33 l 1.77,131.13" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="M 121.5,284.5 H 48" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="M 580,283 H 506.5" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="M 193.04,9.19 237.59,198.7" fill="none" stroke="#000000" stroke-width="3" />
+      <path class="section-line" d="M 431.89,8.07 387.34,197.58" fill="none" stroke="#000000" stroke-width="3" />
+    </g>
+    
+    <!-- Interactive section regions -->
+    @for (section of courtSections; track section.id) {
+      <path 
+        [attr.d]="section.path" 
+        [attr.fill]="getSectionColor(section)"
+        class="section-region"
+        [attr.data-section]="section.id"
+        (click)="selectSection(section.id)"
+      />
+      
+      <text 
+        [attr.x]="section.labelX" 
+        [attr.y]="section.labelY" 
+        font-size="14" 
+        text-anchor="middle" 
+        alignment-baseline="middle"
+        fill="#000"
+        pointer-events="none"
+      >{{section.id}}</text>
+    }
+  </svg>
+</div>

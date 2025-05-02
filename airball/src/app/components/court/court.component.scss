@@ -1,25 +1,33 @@
 .court-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    aspect-ratio: 4/3;
-  }
+  width: 100%;
+  max-width: 800px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.basketball-court {
+  width: 100%;
+  height: auto;
+  border: 2px solid #333;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  background-color: #f5d485;
+}
+
+.section-line {
+  pointer-events: none;
+}
+
+.section-region {
+  cursor: pointer;
+  transition: fill 0.2s ease;
+  stroke: rgba(0,0,0,0.1);
+  stroke-width: 1;
   
-  .basketball-court {
-    width: 100%;
-    height: auto;
-    border: 2px solid #333;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    background-color: #f5d485;
+  &:hover {
+    fill: rgba(255,119,0,0.5) !important;
+    stroke: rgba(0,0,0,0.4);
+    stroke-width: 1.5;
   }
-  
-  .section-marker {
-    cursor: pointer;
-    transition: fill 0.2s ease;
-    
-    &:hover {
-      fill: rgba(255,119,0,0.8);
-    }
-  }
+}
