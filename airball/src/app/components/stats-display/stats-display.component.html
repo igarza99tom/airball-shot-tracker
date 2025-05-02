@@ -1,24 +1,42 @@
 <div class="stats-container">
     <div class="stats-card">
-      <h2>Overall Stats</h2>
+      <h2>{{ sectionName || 'Select a Section' }}</h2>
       <div class="stat-grid">
         <div class="stat-item">
-          <div class="stat-value">{{ stats.totalShots }}</div>
+          <div class="stat-value">{{ stats.section.shots }}</div>
           <div class="stat-label">Total Shots</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ stats.makes }}</div>
+          <div class="stat-value">{{ stats.section.makes }}</div>
           <div class="stat-label">Makes</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ stats.percentage }}%</div>
+          <div class="stat-value">{{ stats.section.percentage }}%</div>
+          <div class="stat-label">Shooting %</div>
+        </div>
+      </div>
+    </div>
+    <div class="stats-card">
+      <h2>Overall Stats</h2>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-value">{{ stats.total.shots }}</div>
+          <div class="stat-label">Total Shots</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{{ stats.total.makes }}</div>
+          <div class="stat-label">Makes</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">{{ stats.total.percentage }}%</div>
           <div class="stat-label">Shooting %</div>
         </div>
       </div>
       
+      <!-- Agregar si se suman sesiones
       <div class="last-session">
         <p>Last session: {{ stats.lastSessionDate }}</p>
-      </div>
+      </div>-->
     </div>
     
     <div class="stats-card">
