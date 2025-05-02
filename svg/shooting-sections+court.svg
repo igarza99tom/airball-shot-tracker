@@ -4,7 +4,7 @@
    height="480"
    version="1.1"
    id="svg1"
-   sodipodi:docname="shooting-sections.svg"
+   sodipodi:docname="shooting-sections+court.svg"
    inkscape:version="1.4 (86a8ad7, 2024-10-11)"
    xml:space="preserve"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,7 +28,7 @@
      inkscape:window-x="1912"
      inkscape:window-y="-8"
      inkscape:window-maximized="1"
-     inkscape:current-layer="g18" /><!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit--><defs
+     inkscape:current-layer="layer1" /><!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit--><defs
      id="defs1"><inkscape:perspective
        sodipodi:type="inkscape:persp3d"
        inkscape:vp_x="135.0574 : 341.82338 : 1"
@@ -56,7 +56,8 @@
          id="feGaussianBlur1" /></filter></defs><g
      class="layer"
      id="g1"
-     inkscape:label="reference"><title
+     inkscape:label="reference"
+     transform="matrix(1,0,0,-1,0,476.96999)"><title
        id="title1">Layer 1</title><image
        filter="url(#svg_1_blur)"
        height="555.12"
@@ -82,7 +83,8 @@
      id="layer1"
      inkscape:label="COURTLINES"
      inkscape:highlight-color="#078542"
-     style="display:inline;opacity:0.5"><g
+     style="display:inline;opacity:0.5"
+     transform="matrix(1,0,0,-1,0,476.96999)"><g
        id="g4"
        inkscape:label="free throws"><path
          style="display:inline;fill:none;stroke:#000000;stroke-width:4;stroke-dasharray:16, 8;stroke-dashoffset:0"
@@ -156,7 +158,8 @@
      inkscape:groupmode="layer"
      id="layer2"
      inkscape:label="SHOOTING SECTIONS"
-     style="display:inline"><g
+     style="display:inline"
+     transform="matrix(1,0,0,-1,0,476.96999)"><g
        id="g18"
        inkscape:label="short2"
        style="display:inline"><path

@@ -1,15 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-interface CourtSection {
-  id: number;
-  name: string;
-  make: number;
-  miss: number;
-  path: string;
-  labelX: number;
-  labelY: number;
-}
+import { CourtSection, SectionType } from '../../models/court-section.model';
 
 @Component({
   selector: 'app-court',
@@ -22,179 +13,144 @@ export class CourtComponent {
   selectedSection: number | null = null;
   
   courtSections: CourtSection[] = [
-    // Left corner 3
-    { 
-      id: 1, 
-      name: 'Left Corner 3', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 47.9 467.59 L 47.9 284.5 L 121.5 284.5 L 94.2 467.28 Z', 
-      labelX: 80, 
-      labelY: 380
-    },
-    // Left wing 3
-    { 
-      id: 2, 
-      name: 'Left Wing 3', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 121.5 284.5 L 237.59 198.7 L 193.04 9.19 L 47.9 9.38 L 47.9 284.5 Z', 
-      labelX: 150, 
-      labelY: 150
-    },
-    // Top 3
-    { 
-      id: 3, 
-      name: 'Top of Key 3', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 193.04 9.19 L 237.59 198.7 L 387.34 197.58 L 431.89 8.07 L 193.04 9.19 Z', 
-      labelX: 315, 
-      labelY: 100
-    },
-    // Right wing 3
-    { 
-      id: 4, 
-      name: 'Right Wing 3', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 431.89 8.07 L 387.34 197.58 L 506.5 283 L 580.74 283 L 580.74 9.38 L 431.89 8.07 Z', 
-      labelX: 480, 
-      labelY: 150
-    },
-    // Right corner 3
-    { 
-      id: 5, 
-      name: 'Right Corner 3', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 506.5 283 L 580.74 283 L 580.74 467.59 L 535.21 467.41 L 506.5 283 Z', 
-      labelX: 545, 
-      labelY: 380
-    },
-    // Left deep 2
-    { 
-      id: 6, 
-      name: 'Left Deep 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 94.2 467.28 L 121.5 284.5 L 174 324.75 L 121.75 467.28 L 94.2 467.28 Z', 
-      labelX: 135, 
-      labelY: 380
-    },
-    // Left wing 2
-    { 
-      id: 7, 
-      name: 'Left Wing 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 121.5 284.5 L 174 324.75 L 251.02 268.7 L 237.59 198.7 L 121.5 284.5 Z', 
-      labelX: 190, 
-      labelY: 260
-    },
-    // Top 2
-    { 
-      id: 8, 
-      name: 'Top Key 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 237.59 198.7 L 251.02 268.7 L 375.68 267.55 L 387.34 197.58 L 237.59 198.7 Z', 
-      labelX: 315, 
-      labelY: 230
-    },
-    // Right wing 2
-    { 
-      id: 9, 
-      name: 'Right Wing 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 387.34 197.58 L 375.68 267.55 L 453.84 322.94 L 506.5 283 L 387.34 197.58 Z', 
-      labelX: 430, 
-      labelY: 260
-    },
-    // Right deep 2
-    { 
-      id: 10, 
-      name: 'Right Deep 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 453.84 322.94 L 506.5 283 L 535.21 467.41 L 506 467.43 L 453.84 322.94 Z', 
-      labelX: 490, 
-      labelY: 380
-    },
-    // Left Short 2
-    { 
-      id: 11, 
-      name: 'Left Short 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 174 324.75 L 234.91 467.59 L 152.49 467.68 L 174 324.75 Z', 
-      labelX: 190, 
-      labelY: 400
-    },
-    // Left Paint
-    { 
-      id: 12, 
-      name: 'Left Paint', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 174 324.75 L 251.02 268.7 L 260.17 347.74 L 234.92 467.59 L 174 324.75 Z', 
-      labelX: 230, 
-      labelY: 350
-    },
-    // Center Paint
-    { 
-      id: 13, 
-      name: 'Center Paint', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 260.17 347.74 L 368.75 347.75 L 379.26 467.59 L 249.63 467.85 L 260.17 347.74 Z', 
-      labelX: 315, 
-      labelY: 400
-    },
-    // Right Paint
-    { 
-      id: 14, 
-      name: 'Right Paint', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 368.75 347.75 L 375.68 267.55 L 453.84 322.94 L 379.26 467.59 L 368.75 347.75 Z', 
-      labelX: 400, 
-      labelY: 350
-    },
-    // Right Short 2
-    { 
-      id: 15, 
-      name: 'Right Short 2', 
-      make: 0, 
-      miss: 0, 
-      path: 'M 453.84 322.94 L 506 467.43 L 379.26 467.59 L 453.84 322.94 Z', 
-      labelX: 440, 
-      labelY: 400
-    }
+    // 1. Left Corner 3
+    new CourtSection(
+      1, 
+      SectionType.LeftCorner3,
+      'M 47.9 9.37 L 47.9 192.46 L 121.5 192.46 L 94.2 9.68 Z', 
+      80, 
+      100
+    ),
+    // 2. Left Wing 3
+    new CourtSection(
+      2, 
+      SectionType.LeftWing3,
+      'M 121.5 192.46 L 237.59 278.26 L 193.04 467.77 L 47.9 467.58 L 47.9 192.46 Z', 
+      150, 
+      330
+    ),
+    // 3. Top of Key 3
+    new CourtSection(
+      3, 
+      SectionType.TopKey3,
+      'M 193.04 467.77 L 237.59 278.26 L 387.34 279.38 L 431.89 468.89 L 193.04 467.77 Z', 
+      315, 
+      380
+    ),
+    // 4. Right Wing 3
+    new CourtSection(
+      4, 
+      SectionType.RightWing3,
+      'M 431.89 468.89 L 387.34 279.38 L 506.5 193.96 L 580.74 193.96 L 580.74 467.58 L 431.89 468.89 Z', 
+      480, 
+      330
+    ),
+    // 5. Right Corner 3
+    new CourtSection(
+      5, 
+      SectionType.RightCorner3,
+      'M 506.5 193.96 L 580.74 193.96 L 580.74 9.37 L 535.21 9.55 L 506.5 193.96 Z', 
+      545, 
+      100
+    ),
+    // 6. Left Deep 2
+    new CourtSection(
+      6, 
+      SectionType.LeftDeep2,
+      'M 94.2 9.68 L 121.5 192.46 L 174 152.21 L 121.75 9.68 L 94.2 9.68 Z', 
+      135, 
+      100
+    ),
+    // 7. Left Wing 2
+    new CourtSection(
+      7, 
+      SectionType.LeftWing2,
+      'M 121.5 192.46 L 174 152.21 L 251.02 208.26 L 237.59 278.26 L 121.5 192.46 Z', 
+      190, 
+      220
+    ),
+    // 8. Top Key 2
+    new CourtSection(
+      8, 
+      SectionType.TopKey2,
+      'M 237.59 278.26 L 251.02 208.26 L 375.68 209.41 L 387.34 279.38 L 237.59 278.26 Z', 
+      315, 
+      250
+    ),
+    // 9. Right Wing 2
+    new CourtSection(
+      9, 
+      SectionType.RightWing2,
+      'M 387.34 279.38 L 375.68 209.41 L 453.84 154.02 L 506.5 193.96 L 387.34 279.38 Z', 
+      430, 
+      220
+    ),
+    // 10. Right Deep 2
+    new CourtSection(
+      10, 
+      SectionType.RightDeep2,
+      'M 453.84 154.02 L 506.5 193.96 L 535.21 9.55 L 506 9.53 L 453.84 154.02 Z', 
+      490, 
+      100
+    ),
+    // 11. Left Short 2 (Merged Left Short 2 and Left Paint)
+    new CourtSection(
+      11, 
+      SectionType.LeftShort2,
+      'M 152.49 9.28 L 174 152.21 L 251.02 208.26 L 260.17 129.22 L 249.63 9.11 Z', 
+      200, 
+      100
+    ),
+    // 12. Center Short 2
+    new CourtSection(
+      12, 
+      SectionType.CenterShort2,
+      'M 260.17 129.22 L 251.02 208.26 L 375.68 209.41 L 368.75 129.21 L 260.17 129.22 Z', 
+      315, 
+      170
+    ),
+    // 13. Right Short 2 (Merged Right Short 2 and Right Paint)
+    new CourtSection(
+      13, 
+      SectionType.RightShort2,
+      'M 368.75 129.21 L 375.68 209.41 L 453.84 154.02 L 506 9.53 L 379.26 9.11 L 368.75 129.21 Z', 
+      420, 
+      100
+    ),
+    // 14. Layup (Center Paint)
+    new CourtSection(
+      14, 
+      SectionType.Layup,
+      'M 249.63 9.11 L 260.17 129.22 L 368.75 129.21 L 379.26 9.11 L 249.63 9.11 Z', 
+      315, 
+      70
+    ),
   ];
 
   selectSection(sectionId: number): void {
     this.selectedSection = sectionId;
-    console.log('Selected section:', sectionId);
+    console.log(`Selected section: ${sectionId}`);
+    // Will integrate with shot tracking service later
   }
 
   getSectionColor(section: CourtSection): string {
+    // Default light color
+    const baseColor = 'rgba(255,255,255,0.1)';
+    
+    // If selected, highlight it
     if (this.selectedSection === section.id) {
-      return 'rgba(255,119,0,0.7)';
+      return 'rgba(255,119,0,0.3)';
     }
     
-    // Calculate percentage if there are shots
-    if (section.make + section.miss > 0) {
-      const percentage = (section.make / (section.make + section.miss)) * 100;
-      
-      // Color based on percentage
-      if (percentage >= 60) return 'rgba(0,255,0,0.4)'; // Good - green
-      if (percentage >= 40) return 'rgba(255,255,0,0.4)'; // Average - yellow
-      return 'rgba(255,0,0,0.4)'; // Poor - red
+    // Return color based on shooting percentage if shots attempted
+    if (section.total > 0) {
+      const percentage = section.percentage;
+      if (percentage >= 60) return 'rgba(0,200,0,0.3)';
+      if (percentage >= 40) return 'rgba(144,238,144,0.3)';
+      if (percentage >= 30) return 'rgba(255,255,0,0.3)';
+      return 'rgba(255,0,0,0.2)';
     }
     
-    // Default color for sections with no shots
-    return 'rgba(200,200,200,0.3)';
+    return baseColor;
   }
 }
