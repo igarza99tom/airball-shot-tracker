@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "airball-shot-tracker",
+    "default": "airball-st",
     "airball": "airball-st"
   },
   "targets": {},
