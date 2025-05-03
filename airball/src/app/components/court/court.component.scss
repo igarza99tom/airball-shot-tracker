@@ -8,18 +8,12 @@
 .basketball-court {
   width: 100%;
   height: auto;
-  background-color: #f5d485;
+  background-color: #f0bc81;
   max-height: 70vh; /* Ensure it takes reasonable vertical space on phones */
 }
 
 .section-line {
   pointer-events: none;
-}
-
-[id="3ptline"] {
-  /* Make the 3PT line slightly more visible for development */
-  stroke-dasharray: none;
-  stroke-opacity: 0.7;
 }
 
 .section-region {
