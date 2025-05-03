@@ -16,6 +16,12 @@
   pointer-events: none;
 }
 
+[id="3ptline"] {
+  /* Make the 3PT line slightly more visible for development */
+  stroke-dasharray: none;
+  stroke-opacity: 0.7;
+}
+
 .section-region {
   cursor: pointer;
   transition: fill 0.2s ease;
