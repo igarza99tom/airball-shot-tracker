@@ -19,7 +19,7 @@ export enum SectionType {
     id: number;
     type: SectionType;
     make: number = 0;
-    miss: number = 0; 
+    total: number = 0; 
     path: string;
     labelX: number;
     labelY: number;
@@ -36,8 +36,8 @@ export enum SectionType {
       return this.type;
     }
   
-    get total(): number {
-      return this.make + this.miss;
+    get miss(): number {
+      return this.total - this.make;
     }
   
     get percentage(): number {

@@ -127,6 +127,14 @@ export class CourtComponent {
     ),
   ];
 
+  constructor() {
+    // Initialize court sections with random shooting data FOR TESTING
+    this.courtSections.forEach(section => {
+      section.total = Math.floor(Math.random() * 100); // Random attempts
+      section.make = Math.floor(Math.random() * section.total); // Random makes
+    });
+  }
+
   selectSection(sectionId: number): void {
     this.selectedSection = sectionId;
     console.log(`Selected section: ${sectionId}`);
