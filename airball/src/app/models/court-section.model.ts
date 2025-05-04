@@ -41,6 +41,6 @@ export enum SectionType {
     }
   
     get percentage(): number {
-      return this.total > 0 ? Math.round((this.make / this.total) * 100) : 0;
+      return this.total > 0 ? (this.make / this.total) * 100 : 0;
     }
   }
