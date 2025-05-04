@@ -23,7 +23,7 @@
   stroke-width: 1;
   
   &:hover {
-    fill: rgba(255,119,0,0.5) !important;
+    fill:rgba(255, 255, 255, 0.5) !important;
     stroke: rgba(0,0,0,0.4);
     stroke-width: 1.5;
   }
@@ -36,4 +36,21 @@
 .label-background {
   opacity: 0.7;
   filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.2));
+}
+
+/* Breathing animation for selected section */
+@keyframes breathing {
+  0% { 
+    fill: var(--section-color); /* Uses the percentage-based color */
+  }
+  50% { 
+    fill: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+  }
+  100% { 
+    fill: var(--section-color); /* Back to the percentage-based color */
+  }
+}
+
+.breathing-section {
+  animation: breathing 3s ease-in-out infinite;
 }

@@ -142,13 +142,13 @@ export class CourtComponent {
   }
 
   getSectionColor(section: CourtSection): string {
-    // Default light color
-    const baseColor = 'rgba(255,255,255,0.1)';
-    
-    // If selected, highlight it
+    // If selected, we want to use CSS animation, so return custom property
     if (this.selectedSection === section.id) {
-      return 'rgba(255,119,0,0.3)';
+      return 'var(--section-color)';
     }
+  
+    // Default light color
+    const baseColor = 'rgba(255, 255, 255, 0.1)';
     
     // Return color based on shooting percentage if shots attempted
     if (section.total > 0) {
@@ -161,4 +161,24 @@ export class CourtComponent {
     
     return baseColor;
   }
+  
+  // Helper to get the color for CSS variable
+  getSectionBaseColor(section: CourtSection): string {
+    // Return color based on shooting percentage if shots attempted
+    if (section.total > 0) {
+      const percentage = section.percentage;
+      if (percentage >= 60) return 'rgba(0,200,0,0.3)';
+      if (percentage >= 40) return 'rgba(144,238,144,0.4)';
+      if (percentage >= 30) return 'rgba(255,255,0,0.3)';
+      return 'rgba(255, 0, 0, 0.3)';
+    }
+    
+    return 'rgba(255, 255, 255, 0.1)';
+  }
+  
+  // Helper method to check if a section is selected
+  isSelected(sectionId: number): boolean {
+    return this.selectedSection === sectionId;
+  }
+
 }

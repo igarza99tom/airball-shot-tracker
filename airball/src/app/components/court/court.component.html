@@ -27,6 +27,8 @@
       <path 
         [attr.d]="section.path" 
         [attr.fill]="getSectionColor(section)"
+        [class.breathing-section]="isSelected(section.id)"
+        [style.--section-color]="getSectionBaseColor(section)"
         class="section-region"
         [attr.data-section]="section.id"
         (click)="selectSection(section.id)"
