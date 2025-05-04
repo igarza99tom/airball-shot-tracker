@@ -25,14 +25,18 @@
     <!-- Interactive section regions -->
     @for (section of courtSections; track section.id) {
       <path 
-        [attr.d]="section.path" 
-        [attr.fill]="getSectionColor(section)"
-        [class.breathing-section]="isSelected(section.id)"
-        [style.--section-color]="getSectionBaseColor(section)"
-        class="section-region"
-        [attr.data-section]="section.id"
-        (click)="selectSection(section.id)"
-      />
+      [attr.d]="section.path" 
+      [attr.fill]="getSectionColor(section)"
+      [class.breathing-section]="isSelected(section.id)"
+      [style.--section-color]="getSectionBaseColor(section)"
+      class="section-region"
+      [attr.data-section]="section.id"
+      (click)="handleSectionClick(section.id, $event)"
+      (mouseenter)="onSectionMouseEnter(section.id)"
+      (mouseleave)="onSectionMouseLeave()"
+      (touchstart)="onSectionTouch($event, section.id)"
+      (touchend)="$event.preventDefault()"
+    />
     }
     
     <!-- Base court layer (moved to the end to appear on top) -->

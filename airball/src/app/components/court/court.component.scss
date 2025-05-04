@@ -21,11 +21,16 @@
   transition: fill 0.2s ease;
   stroke: rgba(0,0,0,0.1);
   stroke-width: 1;
+  -webkit-tap-highlight-color: transparent; /* Remove blue tap highlight on mobile */
+  touch-action: manipulation; /* Improve touch performance */
   
-  &:hover {
-    fill:rgba(255, 255, 255, 0.5) !important;
-    stroke: rgba(0,0,0,0.4);
-    stroke-width: 1.5;
+  /* Only apply hover effects on non-touch devices */
+  @media (hover: hover) {
+    &:hover {
+      fill:rgba(255, 255, 255, 0.5) !important;
+      stroke: rgba(0,0,0,0.4);
+      stroke-width: 1.5;
+    }
   }
 }
 
@@ -53,4 +58,38 @@
 
 .breathing-section {
   animation: breathing 3s ease-in-out infinite;
+}
+
+/* Hover state with timer */
+.hover-active {
+  fill:rgba(255, 255, 255, 0.5) !important;
+  stroke: rgba(0,0,0,0.4);
+  stroke-width: 1.5;
+}
+/* Touch indication for mobile */
+.touch-active {
+  stroke: rgba(0,0,0,0.4);
+  stroke-width: 1.5;
+}
+
+/* Make the breathing animation more visible on mobile */
+@media (max-width: 768px) {
+  .breathing-section {
+    animation: breathing-mobile 3s ease-in-out infinite;
+  }
+  
+  @keyframes breathing-mobile {
+    0% { 
+      fill: var(--section-color); 
+      stroke-width: 1;
+    }
+    50% { 
+      fill: rgba(255, 255, 255, 0.6); 
+      stroke-width: 2;
+    }
+    100% { 
+      fill: var(--section-color);
+      stroke-width: 1;
+    }
+  }
 }

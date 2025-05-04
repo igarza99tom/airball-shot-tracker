@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourtSection, SectionType } from '../../models/court-section.model';
 
@@ -11,6 +11,9 @@ import { CourtSection, SectionType } from '../../models/court-section.model';
 })
 export class CourtComponent {
   selectedSection: number | null = null;
+  hoveredSection: number | null = null;
+  hoverTimer: any = null;
+  isTouchDevice: boolean = false;
   
   courtSections: CourtSection[] = [
     // 1. Left Corner 3
@@ -127,24 +130,94 @@ export class CourtComponent {
     ),
   ];
 
-  constructor() {
+  constructor(private ngZone: NgZone) {
     // Initialize court sections with random shooting data FOR TESTING
     this.courtSections.forEach(section => {
       section.total = Math.floor(Math.random() * 100); // Random attempts
       section.make = Math.floor(Math.random() * section.total); // Random makes
     });
+    
+    // More reliable touch device detection that won't break mouse clicks
+    this.detectTouchDevice();
   }
 
+  // Separate method for detecting touch devices
+  private detectTouchDevice(): void {
+    // First check for touch capability
+    const hasTouchCapability = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    
+    // Also check for common mobile user agent patterns to avoid false positives
+    const mobileUserAgent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    // Only set as touch device if both conditions are true (more reliable for mobile detection)
+    this.isTouchDevice = hasTouchCapability && mobileUserAgent;
+    
+    console.log(`Device detected as ${this.isTouchDevice ? 'touch' : 'non-touch'} device`);
+  }
+  
+
+  // Add this method to handle clicks properly
+  handleSectionClick(sectionId: number, event: MouseEvent): void {
+  // Skip if this is triggered by a touch event on mobile
+  // (touchstart and touchend will fire a click event on mobile)
+  if (this.isTouchDevice && event.detail === 0) {
+    return;
+  }
+  
+  // For desktop (or direct clicks), toggle selection
+  if (this.selectedSection === sectionId) {
+    this.selectedSection = null;
+    console.log(`Deselected section: ${sectionId}`);
+  } else {
+    this.selectedSection = sectionId;
+    console.log(`Selected section via click: ${sectionId}`);
+  }
+}
+
+  // Update the selectSection method to just set the selection without toggling
   selectSection(sectionId: number): void {
     this.selectedSection = sectionId;
     console.log(`Selected section: ${sectionId}`);
-    // Will integrate with shot tracking service later
+  }
+
+  // Update the onSectionTouch method to call handleSectionClick
+  onSectionTouch(event: TouchEvent, sectionId: number): void {
+    // Prevent default to avoid any unwanted behaviors
+    event.preventDefault();
+    
+    // If we tap on the selected section, deselect it
+    if (this.selectedSection === sectionId) {
+      this.selectedSection = null;
+      return;
+    }
+    
+    // Handle the hover state with timer
+    this.clearHoverTimer();
+    this.hoveredSection = sectionId;
+    
+    // Set as selected immediately for mobile
+    this.selectedSection = sectionId;
+    
+    // Use timer to clear hover effect after 3 seconds
+    this.ngZone.runOutsideAngular(() => {
+      this.hoverTimer = setTimeout(() => {
+        this.ngZone.run(() => {
+          this.hoveredSection = null;
+          // Selection remains active, only hover effect goes away
+        });
+      }, 3000);
+    });
   }
 
   getSectionColor(section: CourtSection): string {
     // If selected, we want to use CSS animation, so return custom property
     if (this.selectedSection === section.id) {
       return 'var(--section-color)';
+    }
+    
+    // If hovered (with active timer), use the hover style
+    if (this.hoveredSection === section.id) {
+      return 'rgba(255, 255, 255, 0.5)';
     }
   
     // Default light color
@@ -180,5 +253,31 @@ export class CourtComponent {
   isSelected(sectionId: number): boolean {
     return this.selectedSection === sectionId;
   }
-
+    
+  // Methods for desktop mouse hover
+  onSectionMouseEnter(sectionId: number): void {
+    // Only use hover on desktop, not on touch devices
+    if (this.isTouchDevice) return;
+    
+    // Clear any existing timer
+    this.clearHoverTimer();
+    
+    // Set the hovered section immediately
+    this.hoveredSection = sectionId;
+  }
+  
+  onSectionMouseLeave(): void {
+    // Only respond to mouse leave on desktop
+    if (this.isTouchDevice) return;
+    
+    this.clearHoverTimer();
+    this.hoveredSection = null;
+  }
+  
+  private clearHoverTimer(): void {
+    if (this.hoverTimer) {
+      clearTimeout(this.hoverTimer);
+      this.hoverTimer = null;
+    }
+  }
 }
