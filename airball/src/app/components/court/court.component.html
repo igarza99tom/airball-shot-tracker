@@ -36,40 +36,68 @@
     <!-- Base court layer (moved to the end to appear on top) -->
     <g class="court-base">
       <!-- Court outline -->
-      <rect fill="none" height="458.21" stroke="#FFFFFF" stroke-width="5" width="532.84" x="47.9" y="9.38" />
+      <rect fill="none" height="458.21" stroke="#F0F0F0" stroke-width="5" width="532.84" x="47.9" y="9.38" />
       
       <!-- Center circle -->
-      <path d="M 379,467.57 C 379,432.70 350.74,404.44 315.87,404.44 281,404.44 252.74,432.70 252.74,467.57" fill="none" stroke="#FFFFFF" stroke-width="5" />
+      <path d="M 379,467.57 C 379,432.70 350.74,404.44 315.87,404.44 281,404.44 252.74,432.70 252.74,467.57" fill="none" stroke="#F0F0F0" stroke-width="5" />
       
       <!-- Free throw circle -->
-      <path d="m 248.87,195.71 c 0,36.72 29.76,66.48 66.48,66.48 36.72,0 66.48,-29.76 66.48,-66.48" fill="none" stroke="#FFFFFF" stroke-width="5" />
-      <path d="m 381.83,195.71 c 0,-36.72 -29.76,-66.48 -66.48,-66.48 -36.72,0 -66.48,29.76 -66.48,66.48" fill="none" stroke="#FFFFFF" stroke-width="4" stroke-dasharray="16, 8" />
+      <path d="m 248.87,195.71 c 0,36.72 29.76,66.48 66.48,66.48 36.72,0 66.48,-29.76 66.48,-66.48" fill="none" stroke="#F0F0F0" stroke-width="5" />
+      <path d="m 381.83,195.71 c 0,-36.72 -29.76,-66.48 -66.48,-66.48 -36.72,0 -66.48,29.76 -66.48,66.48" fill="none" stroke="#F0F0F0" stroke-width="4" stroke-dasharray="16, 8" />
       
       <!-- Painted area -->
-      <path d="M 230.68,9.46 V 194.90 h 168.27 V 9.46" fill="none" stroke="#FFFFFF" stroke-width="5" />
+      <path d="M 230.68,9.46 V 194.90 h 168.27 V 9.46" fill="none" stroke="#F0F0F0" stroke-width="5" />
       
       <!-- Restricted area -->
-      <path d="m 269.77,35.24 v 22.56 c 0,22.54 20.2,40.82 45.13,40.82 24.92,0 45.13,-18.27 45.13,-40.82 V 35.14" fill="none" stroke="#FFFFFF" stroke-width="4" />
+      <path d="m 269.77,35.24 v 22.56 c 0,22.54 20.2,40.82 45.13,40.82 24.92,0 45.13,-18.27 45.13,-40.82 V 35.14" fill="none" stroke="#F0F0F0" stroke-width="4" />
       
       <!-- 3pt line -->
-      <path d="m 93.99,9.53 c -1.78,75.6 -0.48,75.49 -1.33,128.91 -0.42,26.07 85.82,154.34 217.83,154.34 143.43,0 223.35,-125.23 223.72,-152.33 l 1.77,-131.13" fill="none" stroke="#FFFFFF" stroke-width="5" />
+      <path d="m 93.99,9.53 c -1.78,75.6 -0.48,75.49 -1.33,128.91 -0.42,26.07 85.82,154.34 217.83,154.34 143.43,0 223.35,-125.23 223.72,-152.33 l 1.77,-131.13" fill="none" stroke="#F0F0F0" stroke-width="5" />
       
       <!-- Hoop -->
-      <path d="M 314.56,38.60 314.41,33.93 M 329.4,53.08 c 0,-8.1 -6.56,-14.66 -14.66,-14.66 -8.1,0 -14.66,6.56 -14.66,14.66 0,8.1 6.56,14.66 14.66,14.66 8.1,0 14.66,-6.56 14.66,-14.66 z" fill="none" stroke="#FFFFFF" stroke-width="3" />
-      <line fill="none" stroke="#FFFFFF" stroke-width="4" x1="286.87" x2="342.83" y1="33.89" y2="33.89" />
+      <path d="M 314.56,38.60 314.41,33.93 M 329.4,53.08 c 0,-8.1 -6.56,-14.66 -14.66,-14.66 -8.1,0 -14.66,6.56 -14.66,14.66 0,8.1 6.56,14.66 14.66,14.66 8.1,0 14.66,-6.56 14.66,-14.66 z" fill="none" stroke="#F0F0F0" stroke-width="3" />
+      <line fill="none" stroke="#F0F0F0" stroke-width="4" x1="286.87" x2="342.83" y1="33.89" y2="33.89" />
     </g>
 
-    <!-- Section labels (last, so they appear on top) -->
+    <!-- Section labels with background rectangles (last, so they appear on top) -->
     @for (section of courtSections; track section.id) {
-      <text 
-        [attr.x]="section.labelX" 
-        [attr.y]="section.labelY" 
-        font-size="14" 
-        text-anchor="middle" 
-        alignment-baseline="middle"
-        fill="#000"
-        pointer-events="none"
-      >{{section.make}}/{{section.total}} {{section.percentage}}%</text>
+      <g class="label-container">
+        <!-- Background rectangle with rounded corners -->
+        <rect 
+          [attr.x]="section.labelX - 30"
+          [attr.y]="section.labelY - 15" 
+          width="60" 
+          height="30" 
+          rx="8" 
+          ry="8" 
+          class="label-background" 
+          fill="rgba(70,70,70,0.6)" 
+        />
+        
+        <!-- Top text line: make/total -->
+        <text 
+          [attr.x]="section.labelX" 
+          [attr.y]="section.labelY - 5" 
+          font-size="13" 
+          text-anchor="middle" 
+          alignment-baseline="middle"
+          fill="white"
+          font-weight="500"
+          pointer-events="none"
+        >{{section.make}}/{{section.total}}</text>
+        
+        <!-- Bottom text line: percentage -->
+        <text 
+          [attr.x]="section.labelX" 
+          [attr.y]="section.labelY + 8" 
+          font-size="13" 
+          text-anchor="middle" 
+          alignment-baseline="middle"
+          fill="white"
+          font-weight="500"
+          pointer-events="none"
+        >{{section.percentage}}%</text>
+      </g>
     }
   </svg>
 </div>
