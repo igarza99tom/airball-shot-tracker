@@ -154,9 +154,9 @@ export class CourtComponent {
     if (section.total > 0) {
       const percentage = section.percentage;
       if (percentage >= 60) return 'rgba(0,200,0,0.3)';
-      if (percentage >= 40) return 'rgba(144,238,144,0.3)';
+      if (percentage >= 40) return 'rgba(144,238,144,0.4)';
       if (percentage >= 30) return 'rgba(255,255,0,0.3)';
-      return 'rgba(255,0,0,0.2)';
+      return 'rgba(255, 0, 0, 0.3)';
     }
     
     return baseColor;
