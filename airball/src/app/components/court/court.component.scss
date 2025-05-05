@@ -1,3 +1,4 @@
+// Container styling
 .court-container {
   width: 100%;
   display: flex;
@@ -5,37 +6,41 @@
   margin: 0 auto;
 }
 
+// Main court SVG
 .basketball-court {
   width: 100%;
   height: auto;
   background-color: #f0bc81;
-  max-height: 70vh; /* Ensure it takes reasonable vertical space on phones */
+  max-height: 70vh; // Ensure reasonable vertical space on phones
 }
 
+// Court line elements
 .section-line {
-  pointer-events: none;
+  pointer-events: none; // Allow clicks to pass through to sections
 }
 
+// Interactive court sections
 .section-region {
   cursor: pointer;
   transition: fill 0.2s ease;
   stroke: rgba(0,0,0,0.1);
   stroke-width: 1;
-  -webkit-tap-highlight-color: transparent; /* Remove blue tap highlight on mobile */
-  touch-action: manipulation; /* Improve touch performance */
+  -webkit-tap-highlight-color: transparent; // Remove blue tap highlight on mobile
+  touch-action: manipulation; // Improve touch performance
   
-  /* Only apply hover effects on non-touch devices */
+  // Only apply hover effects on non-touch devices
   @media (hover: hover) {
     &:hover {
-      fill:rgba(255, 255, 255, 0.5) !important;
+      fill: rgba(255, 255, 255, 0.5) !important;
       stroke: rgba(0,0,0,0.4);
       stroke-width: 1.5;
     }
   }
 }
 
+// Stats label styling
 .label-container {
-  pointer-events: none;
+  pointer-events: none; // Prevent labels from blocking clicks
 }
 
 .label-background {
@@ -43,16 +48,16 @@
   filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.2));
 }
 
-/* Breathing animation for selected section */
+// Animations for selected section
 @keyframes breathing {
   0% { 
-    fill: var(--section-color); /* Uses the percentage-based color */
+    fill: var(--section-color); // Uses the percentage-based color
   }
   50% { 
-    fill: rgba(255, 255, 255, 0.5); /* Semi-transparent white */
+    fill: rgba(255, 255, 255, 0.5); // Semi-transparent white
   }
   100% { 
-    fill: var(--section-color); /* Back to the percentage-based color */
+    fill: var(--section-color); // Back to the percentage-based color
   }
 }
 
@@ -60,19 +65,19 @@
   animation: breathing 3s ease-in-out infinite;
 }
 
-/* Hover state with timer */
+// Interaction states
 .hover-active {
-  fill:rgba(255, 255, 255, 0.5) !important;
+  fill: rgba(255, 255, 255, 0.5) !important;
   stroke: rgba(0,0,0,0.4);
   stroke-width: 1.5;
 }
-/* Touch indication for mobile */
+
 .touch-active {
   stroke: rgba(0,0,0,0.4);
   stroke-width: 1.5;
 }
 
-/* Make the breathing animation more visible on mobile */
+// Mobile-specific styles
 @media (max-width: 768px) {
   .breathing-section {
     animation: breathing-mobile 3s ease-in-out infinite;
@@ -84,7 +89,7 @@
       stroke-width: 1;
     }
     50% { 
-      fill: rgba(255, 255, 255, 0.6); 
+      fill: rgba(255, 255, 255, 0.6); // More visible on mobile
       stroke-width: 2;
     }
     100% { 

@@ -1,6 +1,6 @@
 <div class="court-container">
   <svg viewBox="35 0 560 480" class="basketball-court">
-    <!-- Shooting sections layer (moved first) -->
+    <!-- Shooting sections layer -->
     <g class="shooting-sections">
       <!-- Short 2pt sections -->
       <path class="section-line" d="m 249.63,9.11 c -16.59,14.58 -25.45,32.63 -25.45,54.9 0,44.5 40.98,80.58 91.54,80.58 50.55,0 91.54,-36.07 91.54,-80.58 0,-22.28 -11.69,-40.33 -28.3,-54.92" fill="none" stroke="#000000" stroke-width="3" />
@@ -25,21 +25,21 @@
     <!-- Interactive section regions -->
     @for (section of courtSections; track section.id) {
       <path 
-      [attr.d]="section.path" 
-      [attr.fill]="getSectionColor(section)"
-      [class.breathing-section]="isSelected(section.id)"
-      [style.--section-color]="getSectionBaseColor(section)"
-      class="section-region"
-      [attr.data-section]="section.id"
-      (click)="handleSectionClick(section.id, $event)"
-      (mouseenter)="onSectionMouseEnter(section.id)"
-      (mouseleave)="onSectionMouseLeave()"
-      (touchstart)="onSectionTouch($event, section.id)"
-      (touchend)="$event.preventDefault()"
-    />
+        [attr.d]="section.path" 
+        [attr.fill]="getSectionColor(section)"
+        [class.breathing-section]="isSelected(section.id)"
+        [style.--section-color]="getSectionBaseColor(section)"
+        class="section-region"
+        [attr.data-section]="section.id"
+        (click)="handleSectionClick(section.id, $event)"
+        (mouseenter)="onSectionMouseEnter(section.id)"
+        (mouseleave)="onSectionMouseLeave()"
+        (touchstart)="onSectionTouch($event, section.id)"
+        (touchend)="$event.preventDefault()"
+      />
     }
     
-    <!-- Base court layer (moved to the end to appear on top) -->
+    <!-- Base court layer -->
     <g class="court-base">
       <!-- Court outline -->
       <rect fill="none" height="458.21" stroke="#F0F0F0" stroke-width="5" width="532.84" x="47.9" y="9.38" />
@@ -65,10 +65,10 @@
       <line fill="none" stroke="#F0F0F0" stroke-width="4" x1="286.87" x2="342.83" y1="33.89" y2="33.89" />
     </g>
 
-    <!-- Section labels with background rectangles (last, so they appear on top) -->
+    <!-- Section labels -->
     @for (section of courtSections; track section.id) {
       <g class="label-container">
-        <!-- Background rectangle with rounded corners -->
+        <!-- Background rectangle -->
         <rect 
           [attr.x]="section.labelX - 30"
           [attr.y]="section.labelY - 15" 
@@ -80,7 +80,7 @@
           fill="rgba(70,70,70,0.6)" 
         />
         
-        <!-- Top text line: make/total -->
+        <!-- Make/Total stats -->
         <text 
           [attr.x]="section.labelX" 
           [attr.y]="section.labelY - 5" 
@@ -92,7 +92,7 @@
           pointer-events="none"
         >{{section.make}}/{{section.total}}</text>
         
-        <!-- Bottom text line: percentage -->
+        <!-- Percentage stats -->
         <text 
           [attr.x]="section.labelX" 
           [attr.y]="section.labelY + 8" 
