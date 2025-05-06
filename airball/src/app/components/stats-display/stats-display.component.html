@@ -1,62 +1,62 @@
 <div class="stats-container">
+  <!-- Section-specific stats card (conditionally shown) -->
+  @if (selectedSection) {
     <div class="stats-card">
-      <h2>{{ sectionName || 'Select a Section' }}</h2>
+      <h2>{{ selectedSection.name }}</h2>
       <div class="stat-grid">
         <div class="stat-item">
-          <div class="stat-value">{{ stats.section.shots }}</div>
+          <div class="stat-value">{{ getSectionStats().shots }}</div>
           <div class="stat-label">Total Shots</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ stats.section.makes }}</div>
+          <div class="stat-value">{{ getSectionStats().makes }}</div>
           <div class="stat-label">Makes</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ stats.section.percentage }}%</div>
+          <div class="stat-value">{{ getSectionStats().percentage }}%</div>
           <div class="stat-label">Shooting %</div>
         </div>
       </div>
     </div>
-    <div class="stats-card">
-      <h2>Overall Stats</h2>
-      <div class="stat-grid">
-        <div class="stat-item">
-          <div class="stat-value">{{ stats.total.shots }}</div>
-          <div class="stat-label">Total Shots</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">{{ stats.total.makes }}</div>
-          <div class="stat-label">Makes</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">{{ stats.total.percentage }}%</div>
-          <div class="stat-label">Shooting %</div>
-        </div>
+  }
+  <!-- Overall stats card (always shown) -->
+  <div class="stats-card">
+    <h2>Overall Stats</h2>
+    <div class="stat-grid">
+      <div class="stat-item">
+        <div class="stat-value">{{ stats.total.shots }}</div>
+        <div class="stat-label">Total Shots</div>
       </div>
-      
-      <!-- Agregar si se suman sesiones
-      <div class="last-session">
-        <p>Last session: {{ stats.lastSessionDate }}</p>
-      </div>-->
-    </div>
-    
-    <div class="stats-card">
-      <h2>Recent Shooting</h2>
-      <div class="shooting-list">
-        @for (location of recentShooting; track location.id) {
-          <div class="shooting-item">
-            <div class="location-info">
-              <span class="location-id">{{ location.id }}</span>
-              <span class="location-name">{{ location.name }}</span>
-            </div>
-            <div class="shooting-data">
-              <span class="shooting-fraction">{{ location.makes }}/{{ location.attempts }}</span>
-              <div class="percentage-bar-container">
-                <div class="percentage-bar" [style.width.%]="location.percentage"></div>
-                <span class="percentage-text">{{ location.percentage }}%</span>
-              </div>
-            </div>
-          </div>
-        }
+      <div class="stat-item">
+        <div class="stat-value">{{ stats.total.makes }}</div>
+        <div class="stat-label">Makes</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value">{{ stats.total.percentage }}%</div>
+        <div class="stat-label">Shooting %</div>
       </div>
     </div>
   </div>
+  
+  <!-- Recent shooting card -->
+  <div class="stats-card">
+    <h2>Recent Shooting</h2>
+    <div class="shooting-list">
+      @for (location of recentShooting; track location.id) {
+        <div class="shooting-item">
+          <div class="location-info">
+            <span class="location-id">{{ location.id }}</span>
+            <span class="location-name">{{ location.name }}</span>
+          </div>
+          <div class="shooting-data">
+            <span class="shooting-fraction">{{ location.makes }}/{{ location.attempts }}</span>
+            <div class="percentage-bar-container">
+              <div class="percentage-bar" [style.width.%]="location.percentage"></div>
+              <span class="percentage-text">{{ location.percentage }}%</span>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

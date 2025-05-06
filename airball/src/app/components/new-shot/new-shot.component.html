@@ -1,14 +1,29 @@
-<div class="shot-card-container">    
-    <div class="card" #swipeCard (mousedown)="startDrag($event)" (touchstart)="startDrag($event)">
+<div class="shot-card-container">
+  <!-- Show guidance only at startup, not after deselecting -->
+  @if (shouldShowPrompt()) {
+    <div class="selection-prompt">
+      <div class="prompt-icon">↑</div>
+      <p>Select a section to start</p>
+    </div>
+  }
+  
+  <!-- Show swipe card when section is selected -->
+  @if (selectedSection) {
+    <div 
+      #swipeCard 
+      class="card" 
+      (mousedown)="startDrag($event)"
+      (touchstart)="startDrag($event)"
+    >
       <div class="card-overlay make">MAKE</div>
       <div class="card-overlay miss">MISS</div>
-      
       <div class="card-content">
-        <h2>New Shot</h2>
+        <h2>New shot</h2>
         <div class="swipe-hint">
-          <p>Swipe right for make, left for miss</p>
+          <p>Swipe right for MAKE, left for MISS</p>
           <div class="swipe-arrow">⟷</div>
         </div>
       </div>
     </div>
-  </div>
+  }
+</div>

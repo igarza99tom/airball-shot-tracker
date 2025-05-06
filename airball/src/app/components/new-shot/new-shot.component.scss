@@ -4,6 +4,38 @@
     perspective: 1000px;
   }
   
+  // More compact selection prompt
+  .selection-prompt {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    padding: 10px;
+    text-align: center;
+    color: #666;
+    min-height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    
+    .prompt-icon {
+      font-size: 18px;
+      animation: bounce 1.5s infinite;
+      margin: 0;
+    }
+    
+    p {
+      font-size: 14px;
+      margin: 0;
+    }
+  }
+
+  
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  
   .card {
     position: relative;
     width: 100%;

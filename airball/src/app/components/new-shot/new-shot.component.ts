@@ -1,5 +1,8 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Subscription } from 'rxjs';
+import { CourtSelectionService } from '../../services/court-selection.service';
+import { CourtSection } from '../../models/court-section.model';
 
 @Component({
   selector: 'app-new-shot',
@@ -8,18 +11,45 @@ import { CommonModule } from '@angular/common';
   templateUrl: './new-shot.component.html',
   styleUrl: './new-shot.component.scss'
 })
-export class NewShotComponent {
+export class NewShotComponent implements OnInit, OnDestroy {
   @ViewChild('swipeCard') swipeCard?: ElementRef;
   
   isDragging = false;
   startX = 0;
   currentX = 0;
   
-  // Mock data
-  selectedSection = {
-    id: 3,
-    name: 'Top of Key 3'
-  };
+  // Currently selected section
+  selectedSection: CourtSection | null = null;
+  
+  // Track if we've had any selection during this session
+  hasHadInitialSelection = false;
+  
+  private subscription: Subscription = new Subscription();
+  
+  constructor(private courtSelectionService: CourtSelectionService) {}
+  
+  ngOnInit() {
+    // Subscribe to section changes
+    this.subscription = this.courtSelectionService.selectedSection$.subscribe(section => {
+      // If we get a valid section and it's the first one, mark that we've had an initial selection
+      if (section && !this.hasHadInitialSelection) {
+        this.hasHadInitialSelection = true;
+      }
+      
+      this.selectedSection = section;
+    });
+  }
+  
+  ngOnDestroy() {
+    // Clean up subscription when component is destroyed
+    this.subscription.unsubscribe();
+  }
+  
+  // Function to determine if we should show the selection prompt
+  shouldShowPrompt(): boolean {
+    // Only show prompt if we haven't had an initial selection yet
+    return !this.hasHadInitialSelection && !this.selectedSection;
+  }
   
   startDrag(event: MouseEvent | TouchEvent) {
     this.isDragging = true;
@@ -109,6 +139,14 @@ export class NewShotComponent {
   }
   
   private recordShot(isMake: boolean) {
+    if (!this.selectedSection) return;
+    
+    if (isMake) {
+      this.selectedSection.addMake();
+    } else {
+      this.selectedSection.addMiss();
+    }
+    
     console.log(`Shot ${isMake ? 'MADE' : 'MISSED'} from ${this.selectedSection.name}`);
   }
 }

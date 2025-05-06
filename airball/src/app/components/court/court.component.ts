@@ -1,6 +1,7 @@
 import { Component, NgZone, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CourtSection, SectionType } from '../../models/court-section.model';
+import { CourtSelectionService } from '../../services/court-selection.service';
 
 @Component({
   selector: 'app-court',
@@ -21,13 +22,16 @@ export class CourtComponent implements OnInit {
   // Court data
   courtSections: CourtSection[] = [];
 
-  constructor(private ngZone: NgZone) {
+  constructor(
+    private ngZone: NgZone,
+    private courtSelectionService: CourtSelectionService
+  ) {
     this.detectTouchDevice();
   }
 
   ngOnInit(): void {
     this.initializeCourtSections();
-    this.generateTestData();
+    //this.generateTestData();
   }
 
   // SECTION: Event Handlers
@@ -94,8 +98,13 @@ export class CourtComponent implements OnInit {
   private toggleSectionSelection(sectionId: number): void {
     if (this.selectedSection === sectionId) {
       this.selectedSection = null;
+      // Update the service with null selection
+      this.courtSelectionService.selectSection(null);
     } else {
       this.selectedSection = sectionId;
+      // Find the selected section and update the service
+      const section = this.courtSections.find(s => s.id === sectionId) || null;
+      this.courtSelectionService.selectSection(section);
     }
   }
   
