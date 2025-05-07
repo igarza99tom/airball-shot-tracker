@@ -182,26 +182,40 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
       percentage: percentage.toFixed(2)
     };
   }
-  
+
+  /**
+   * Get all valid sections for ranking (with minimum attempts)
+   */
+  private getValidSectionsForRanking(): CourtSection[] {
+    // Only include sections with at least 5 attempts
+    return this.allSections.filter(section => section.total >= 5);
+  }
+
+  /**
+   * Checks if there are any valid sections for best/worst spots
+   */
+  hasValidSectionsForRanking(): boolean {
+    // Only consider sections with at least 5 attempts as valid for ranking
+    return this.allSections.some(section => section.total >= 5);
+  }
+
   /**
    * Get the best shooting spots (min 5 attempts)
    */
   getBestSpots(): CourtSection[] {
-    // Only include sections with at least 5 attempts
-    const validSections = this.allSections.filter(section => section.total >= 5);
+    const validSections = this.getValidSectionsForRanking();
     
     // Sort by percentage (highest first)
     return [...validSections]
       .sort((a, b) => b.percentage - a.percentage)
       .slice(0, 3); // Return top 3
   }
-  
+
   /**
    * Get the worst shooting spots (min 5 attempts)
    */
   getWorstSpots(): CourtSection[] {
-    // Only include sections with at least 5 attempts
-    const validSections = this.allSections.filter(section => section.total >= 5);
+    const validSections = this.getValidSectionsForRanking();
     
     // Sort by percentage (lowest first)
     return [...validSections]
