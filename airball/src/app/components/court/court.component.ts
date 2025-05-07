@@ -31,7 +31,8 @@ export class CourtComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeCourtSections();
-    //this.generateTestData();
+    // Share all sections with the service so other components can access them
+    this.courtSelectionService.updateAllSections(this.courtSections);
   }
 
   // SECTION: Event Handlers

@@ -1,129 +1,241 @@
 .stats-container {
-    width: 100%;
-    margin: 0 auto;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.stats-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  
+  &:last-child {
+    margin-bottom: 0;
   }
   
-  .stats-card {
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    padding: 15px;
-    margin-bottom: 15px;
-    
-    &:last-child {
-      margin-bottom: 0;
-    }
+  h2 {
+    color: #333;
+    font-size: 18px;
+    margin: 0 0 15px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+}
+
+// Table-like stats layout
+.stats-table {
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     
     h2 {
-      color: #333;
-      font-size: 18px;
-      margin: 0 0 15px;
-      padding-bottom: 8px;
-      border-bottom: 1px solid #f0f0f0;
+      margin: 0;
+      padding: 0;
+      border: none;
     }
   }
   
-  .stat-grid {
+  .toggle-btn {
+    background: #f0f0f0;
+    border: none;
+    padding: 5px 12px;
+    border-radius: 4px;
+    color: #333;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    
+    &:hover {
+      background: #e0e0e0;
+    }
+  }
+}
+
+.stat-category {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  
+  &:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+  }
+  
+  .category-header {
     display: flex;
-    justify-content: space-around;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .stat-item {
-    flex: 1;
-    padding: 0 5px;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    padding: 5px 0;
     
-    .stat-value {
-      font-size: 24px;
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      color: #444;
+    }
+    
+    .toggle-icon {
+      font-size: 18px;
       font-weight: bold;
-      color: #ff7700;
-    }
-    
-    .stat-label {
-      font-size: 12px;
       color: #777;
-      margin-top: 5px;
+    }
+    
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.02);
     }
   }
+}
+
+.stat-grid {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin: 10px 0;
+}
+
+.stat-item {
+  flex: 1;
+  padding: 0 5px;
   
-  .last-session {
-    text-align: center;
-    color: #888;
-    font-style: italic;
+  .stat-label {
     font-size: 12px;
+    color: #777;
+    margin-bottom: 5px;
   }
   
-  .shooting-list {
-    .shooting-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 10px 0;
-      border-bottom: 1px solid #f0f0f0;
-      
-      &:last-child {
-        border-bottom: none;
-      }
+  .stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ff7700;
+  }
+}
+
+// Expanded sections
+.expanded-sections {
+  background-color: rgba(0, 0, 0, 0.02);
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin: 0 5px 10px 5px;
+  
+  .section-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    
+    &:last-child {
+      border-bottom: none;
     }
     
-    .location-info {
-      display: flex;
-      align-items: center;
-      
-      .location-id {
-        background: #ff7700;
-        color: white;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 10px;
-        font-weight: bold;
-        font-size: 12px;
-      }
-      
-      .location-name {
-        font-size: 14px;
-      }
+    .section-name {
+      font-size: 13px;
+      color: #555;
     }
     
-    .shooting-data {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      min-width: 120px;
-      
-      .shooting-fraction {
-        font-size: 12px;
-        color: #666;
-        margin-bottom: 3px;
-      }
-    }
-    
-    .percentage-bar-container {
-      width: 80px;
-      height: 6px;
-      background: #f0f0f0;
-      border-radius: 3px;
-      position: relative;
-      overflow: hidden;
-      
-      .percentage-bar {
-        height: 100%;
-        background: #ff7700;
-        border-radius: 3px;
-      }
-      
-      .percentage-text {
-        position: absolute;
-        right: -25px;
-        top: -4px;
-        font-size: 10px;
-        color: #333;
-        font-weight: 500;
-      }
+    .section-stats {
+      font-size: 13px;
+      color: #444;
+      font-weight: 500;
     }
   }
+}
+
+// Best/worst spots grid layout
+.stats-grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.half-width {
+  flex: 1 1 calc(50% - 10px);
+  min-width: 280px;
+  
+  @media (max-width: 680px) {
+    flex: 1 1 100%;
+  }
+}
+
+.ranking-list {
+  .ranking-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f0f0;
+    
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+  
+  .ranking-info {
+    display: flex;
+    align-items: center;
+    
+    .ranking-badge {
+      background: #ff7700;
+      color: white;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 10px;
+      font-weight: bold;
+      font-size: 12px;
+    }
+    
+    .ranking-name {
+      font-size: 14px;
+    }
+  }
+  
+  .ranking-stats {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: 120px;
+    
+    .ranking-fraction {
+      font-size: 12px;
+      color: #666;
+      margin-bottom: 3px;
+    }
+  }
+}
+
+.percentage-bar-container {
+  width: 80px;
+  height: 6px;
+  background: #f0f0f0;
+  border-radius: 3px;
+  position: relative;
+  overflow: hidden;
+  
+  .percentage-bar {
+    height: 100%;
+    border-radius: 3px;
+    
+    &.success {
+      background: #2ecc71;
+    }
+    
+    &.danger {
+      background: #e74c3c;
+    }
+  }
+  
+  .percentage-text {
+    position: absolute;
+    right: -25px;
+    top: -4px;
+    font-size: 10px;
+    color: #333;
+    font-weight: 500;
+  }
+}

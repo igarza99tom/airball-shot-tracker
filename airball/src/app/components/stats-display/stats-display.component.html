@@ -5,58 +5,198 @@
       <h2>{{ selectedSection.name }}</h2>
       <div class="stat-grid">
         <div class="stat-item">
-          <div class="stat-value">{{ getSectionStats().shots }}</div>
-          <div class="stat-label">Total Shots</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-value">{{ getSectionStats().makes }}</div>
           <div class="stat-label">Makes</div>
+          <div class="stat-value">{{ getSectionStats().makes }}</div>
         </div>
         <div class="stat-item">
-          <div class="stat-value">{{ getSectionStats().percentage }}%</div>
+          <div class="stat-label">Total Shots</div>
+          <div class="stat-value">{{ getSectionStats().shots }}</div>
+        </div>
+        <div class="stat-item">
           <div class="stat-label">Shooting %</div>
+          <div class="stat-value">{{ getSectionStats().percentage }}%</div>
         </div>
       </div>
     </div>
   }
-  <!-- Overall stats card (always shown) -->
-  <div class="stats-card">
-    <h2>Overall Stats</h2>
-    <div class="stat-grid">
-      <div class="stat-item">
-        <div class="stat-value">{{ stats.total.shots }}</div>
-        <div class="stat-label">Total Shots</div>
+  
+  <!-- Statistical breakdown by section type -->
+  <div class="stats-card stats-table">
+    <div class="header-row">
+      <h2>Shot Stats</h2>
+      <button class="toggle-btn" (click)="toggleStatsExpanded()">
+        {{ statsExpanded ? 'Collapse' : 'Expand' }}
+      </button>
+    </div>
+    
+    <!-- Totals (always visible) -->
+    <div class="stat-category">
+      <div class="category-header">
+        <h3>Total Shots</h3>
       </div>
-      <div class="stat-item">
-        <div class="stat-value">{{ stats.total.makes }}</div>
-        <div class="stat-label">Makes</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-value">{{ stats.total.percentage }}%</div>
-        <div class="stat-label">Shooting %</div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-label">Makes</div>
+          <div class="stat-value">{{ getTotalStats().makes }}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Total</div>
+          <div class="stat-value">{{ getTotalStats().shots }}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Percentage</div>
+          <div class="stat-value">{{ getTotalStats().percentage }}%</div>
+        </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Recent shooting card -->
-  <div class="stats-card">
-    <h2>Recent Shooting</h2>
-    <div class="shooting-list">
-      @for (location of recentShooting; track location.id) {
-        <div class="shooting-item">
-          <div class="location-info">
-            <span class="location-id">{{ location.id }}</span>
-            <span class="location-name">{{ location.name }}</span>
-          </div>
-          <div class="shooting-data">
-            <span class="shooting-fraction">{{ location.makes }}/{{ location.attempts }}</span>
-            <div class="percentage-bar-container">
-              <div class="percentage-bar" [style.width.%]="location.percentage"></div>
-              <span class="percentage-text">{{ location.percentage }}%</span>
+    
+    <!-- 3 Point Shots (always visible) -->
+    <div class="stat-category">
+      <div class="category-header" (click)="toggle3ptExpanded()">
+        <h3>3-Point Shots</h3>
+        <span class="toggle-icon">{{ is3ptExpanded ? '−' : '+' }}</span>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-item">
+          <div class="stat-label">Makes</div>
+          <div class="stat-value">{{ get3ptStats().makes }}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Total</div>
+          <div class="stat-value">{{ get3ptStats().shots }}</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-label">Percentage</div>
+          <div class="stat-value">{{ get3ptStats().percentage }}%</div>
+        </div>
+      </div>
+      
+      <!-- Expanded 3pt breakdown by section -->
+      @if (is3ptExpanded) {
+        <div class="expanded-sections">
+          @for (section of get3ptSections(); track section.id) {
+            <div class="section-row">
+              <span class="section-name">{{ section.name }}</span>
+              <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
             </div>
-          </div>
+          }
         </div>
       }
+    </div>
+    
+    <!-- Mid Range Shots (conditionally visible) -->
+    @if (statsExpanded) {
+      <div class="stat-category">
+        <div class="category-header" (click)="toggleMidRangeExpanded()">
+          <h3>Mid-Range Shots</h3>
+          <span class="toggle-icon">{{ isMidRangeExpanded ? '−' : '+' }}</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-label">Makes</div>
+            <div class="stat-value">{{ getMidRangeStats().makes }}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Total</div>
+            <div class="stat-value">{{ getMidRangeStats().shots }}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Percentage</div>
+            <div class="stat-value">{{ getMidRangeStats().percentage }}%</div>
+          </div>
+        </div>
+        
+        <!-- Expanded mid-range breakdown by section -->
+        @if (isMidRangeExpanded) {
+          <div class="expanded-sections">
+            @for (section of getMidRangeSections(); track section.id) {
+              <div class="section-row">
+                <span class="section-name">{{ section.name }}</span>
+                <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+      
+      <!-- Paint Shots (conditionally visible) -->
+      <div class="stat-category">
+        <div class="category-header" (click)="togglePaintExpanded()">
+          <h3>Paint Shots</h3>
+          <span class="toggle-icon">{{ isPaintExpanded ? '−' : '+' }}</span>
+        </div>
+        <div class="stat-grid">
+          <div class="stat-item">
+            <div class="stat-label">Makes</div>
+            <div class="stat-value">{{ getPaintStats().makes }}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Total</div>
+            <div class="stat-value">{{ getPaintStats().shots }}</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-label">Percentage</div>
+            <div class="stat-value">{{ getPaintStats().percentage }}%</div>
+          </div>
+        </div>
+        
+        <!-- Expanded paint breakdown by section -->
+        @if (isPaintExpanded) {
+          <div class="expanded-sections">
+            @for (section of getPaintSections(); track section.id) {
+              <div class="section-row">
+                <span class="section-name">{{ section.name }}</span>
+                <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
+  </div>
+  
+  <!-- Best and Worst spots side by side -->
+  <div class="stats-grid-container">
+    <div class="stats-card half-width">
+      <h2>Best Spots</h2>
+      <div class="ranking-list">
+        @for (spot of getBestSpots(); track spot.id) {
+          <div class="ranking-item">
+            <div class="ranking-info">
+              <span class="ranking-badge">{{ $index + 1 }}</span>
+              <span class="ranking-name">{{ spot.name }}</span>
+            </div>
+            <div class="ranking-stats">
+              <span class="ranking-fraction">{{ spot.make }}/{{ spot.total }}</span>
+              <div class="percentage-bar-container">
+                <div class="percentage-bar success" [style.width.%]="spot.percentage"></div>
+                <span class="percentage-text">{{ spot.percentage.toFixed(1) }}%</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+    
+    <div class="stats-card half-width">
+      <h2>Worst Spots</h2>
+      <div class="ranking-list">
+        @for (spot of getWorstSpots(); track spot.id) {
+          <div class="ranking-item">
+            <div class="ranking-info">
+              <span class="ranking-badge">{{ $index + 1 }}</span>
+              <span class="ranking-name">{{ spot.name }}</span>
+            </div>
+            <div class="ranking-stats">
+              <span class="ranking-fraction">{{ spot.make }}/{{ spot.total }}</span>
+              <div class="percentage-bar-container">
+                <div class="percentage-bar danger" [style.width.%]="spot.percentage"></div>
+                <span class="percentage-text">{{ spot.percentage.toFixed(1) }}%</span>
+              </div>
+            </div>
+          </div>
+        }
+      </div>
     </div>
   </div>
 </div>
