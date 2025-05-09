@@ -51,43 +51,83 @@
         </div>
       </div>
     </div>
-    
-    <!-- 3 Point Shots (always visible) -->
-    <div class="stat-category">
-      <div class="stat-row">
-        <div class="category-header" (click)="toggle3ptExpanded()">
-          <h3>3-Point Shots</h3>
-          <span class="toggle-icon">{{ is3ptExpanded ? '−' : '+' }}</span>
-        </div>
-        <div class="stat-grid">
-          <div class="stat-item">
-            <div class="stat-label">Makes</div>
-            <div class="stat-value">{{ get3ptStats().makes }}</div>
+
+    <!-- Free Throws (conditionally visible) -->
+    @if (hasFreethrowAttempts()) {
+      <div class="stat-category">
+        <div class="stat-row">
+          <div class="category-header" (click)="toggleFreeThrowExpanded()">
+            <h3>Free Throws</h3>
+            <span class="toggle-icon">{{ isFreethrowExpanded ? '−' : '+' }}</span>
           </div>
-          <div class="stat-item">
-            <div class="stat-label">Total</div>
-            <div class="stat-value">{{ get3ptStats().shots }}</div>
-          </div>
-          <div class="stat-item">
-            <div class="stat-label">Percentage</div>
-            <div class="stat-value">{{ get3ptStats().percentage }}%</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Expanded 3pt breakdown by section -->
-      @if (is3ptExpanded) {
-        <div class="expanded-sections">
-          @for (section of get3ptSections(); track section.id) {
-            <div class="section-row">
-              <span class="section-name">{{ section.name }}</span>
-              <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-label">Makes</div>
+              <div class="stat-value">{{ getFreeThrowStats().makes }}</div>
             </div>
-          }
+            <div class="stat-item">
+              <div class="stat-label">Total</div>
+              <div class="stat-value">{{ getFreeThrowStats().shots }}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Percentage</div>
+              <div class="stat-value">{{ getFreeThrowStats().percentage }}%</div>
+            </div>
+          </div>
         </div>
-      }
-    </div>
-    
+        
+        <!-- Expanded free throw details -->
+        @if (isFreethrowExpanded) {
+          <div class="expanded-sections">
+            <div class="section-row">
+              <span class="section-name">Free Throw</span>
+              <span class="section-stats">
+                {{ getFreeThrowStats().makes }}/{{ getFreeThrowStats().shots }} 
+                ({{ getFreeThrowStats().percentage }}%)
+              </span>
+            </div>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- 3 Point Shots (conditionally visible) -->
+    @if (has3ptAttempts()) {
+      <div class="stat-category">
+        <div class="stat-row">
+          <div class="category-header" (click)="toggle3ptExpanded()">
+            <h3>3-Point Shots</h3>
+            <span class="toggle-icon">{{ is3ptExpanded ? '−' : '+' }}</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-label">Makes</div>
+              <div class="stat-value">{{ get3ptStats().makes }}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Total</div>
+              <div class="stat-value">{{ get3ptStats().shots }}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Percentage</div>
+              <div class="stat-value">{{ get3ptStats().percentage }}%</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Expanded 3pt breakdown by section -->
+        @if (is3ptExpanded) {
+          <div class="expanded-sections">
+            @for (section of get3ptSections(); track section.id) {
+              <div class="section-row">
+                <span class="section-name">{{ section.name }}</span>
+                <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    }
     <!-- Mid Range Shots (conditionally visible) -->
     @if (statsExpanded) {
       <div class="stat-category">

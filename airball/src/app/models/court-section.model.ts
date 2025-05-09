@@ -12,7 +12,8 @@ export enum SectionType {
   LeftShort2 = 'Left Short 2',
   CenterShort2 = 'Center Short 2',
   RightShort2 = 'Right Short 2',
-  Layup = 'Layup'
+  Layup = 'Layup',
+  FreeThrow = 'Free Throw'
 }
 
 /**

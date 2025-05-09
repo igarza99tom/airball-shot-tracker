@@ -38,7 +38,7 @@ export class CourtComponent implements OnInit {
   // SECTION: Event Handlers
   
   /**
-   * Handles mouse or direct click events on court sections
+   * Handles click on a section region
    */
   handleSectionClick(sectionId: number, event: MouseEvent): void {
     // Skip if this is triggered by a touch event on mobile
@@ -46,7 +46,7 @@ export class CourtComponent implements OnInit {
       return;
     }
     
-    this.toggleSectionSelection(sectionId);
+    this.handleSectionSelection(sectionId);
   }
 
   /**
@@ -181,6 +181,115 @@ export class CourtComponent implements OnInit {
     
     this.isTouchDevice = hasTouchCapability && mobileUserAgent;
   }
+
+  /**
+   * Returns the ID of the free throw section or -1 if not found
+   */
+  getFreeThrowSectionId(): number {
+    const freeThrowSection = this.courtSections.find(s => s.type === SectionType.FreeThrow);
+    return freeThrowSection ? freeThrowSection.id : -1;
+  }
+
+  /**
+   * Handles click on free throw button
+   */
+  handleFreeThrowClick(event: MouseEvent): void {
+    // Skip if this is triggered by a touch event on mobile
+    if (this.isTouchDevice && event.detail === 0) {
+      return;
+    }
+    
+    this.selectFreeThrow();
+  }
+
+  /**
+   * Handles touch on free throw button for mobile devices
+   */
+  onFreeThrowTouch(event: TouchEvent): void {
+    event.preventDefault();
+    this.selectFreeThrow();
+  }
+
+  /**
+   * Selects or deselects the free throw section
+   */
+  private selectFreeThrow(): void {
+    const freeThrowSection = this.courtSections.find(s => s.type === SectionType.FreeThrow);
+    
+    if (freeThrowSection) {
+      // Toggle selection just like other sections
+      if (this.selectedSection === freeThrowSection.id) {
+        // Deselect if already selected
+        this.selectedSection = null;
+        this.courtSelectionService.selectSection(null);
+      } else {
+        // Select if not already selected
+        this.selectedSection = freeThrowSection.id;
+        this.courtSelectionService.selectSection(freeThrowSection);
+      }
+    }
+  }
+
+  /**
+   * Gets the fill color for the free throw button based on the percentage
+   * Red for 0-33%, Yellow for 34-66%, Green for 67-100%
+   */
+  getFreeThrowFillColor(): string {
+    const freeThrowSection = this.courtSections.find(s => s.type === SectionType.FreeThrow);
+    
+    if (!freeThrowSection || freeThrowSection.total === 0) {
+      return '#ff7700'; // Default orange color when no shots taken
+    }
+    
+    const percentage = freeThrowSection.percentage;
+    
+    if (percentage < 33.33) {
+      return '#e74c3c'; // Red for low percentage
+    } else if (percentage < 66.67) {
+      return '#f39c12'; // Yellow/Orange for medium percentage
+    } else {
+      return '#2ecc71'; // Green for high percentage
+    }
+  }
+
+  /**
+   * Handles click on a section label
+   */
+  handleLabelClick(sectionId: number, event: MouseEvent): void {
+    // Skip if this is triggered by a touch event on mobile
+    if (this.isTouchDevice && event.detail === 0) {
+      return;
+    }
+    
+    this.handleSectionSelection(sectionId);
+  }
+
+  /**
+   * Handles touch on a section label
+   */
+  onLabelTouch(event: TouchEvent, sectionId: number): void {
+    event.preventDefault();
+    this.handleSectionSelection(sectionId);
+  }
+
+  /**
+   * Common method to handle section selection from both direct section clicks and label clicks
+   */
+  private handleSectionSelection(sectionId: number): void {
+    // Toggle selection
+    if (this.selectedSection === sectionId) {
+      // Deselect if already selected
+      this.selectedSection = null;
+      this.courtSelectionService.selectSection(null);
+    } else {
+      // Select if not already selected
+      this.selectedSection = sectionId;
+      const section = this.courtSections.find(s => s.id === sectionId);
+      if (section) {
+        this.courtSelectionService.selectSection(section);
+      }
+    }
+  }
   
   /**
    * Generates random test data for court sections
@@ -197,7 +306,6 @@ export class CourtComponent implements OnInit {
    */
   private initializeCourtSections(): void {
     this.courtSections = [
-      // 1. Left Corner 3
       new CourtSection(
         1, 
         SectionType.LeftCorner3,
@@ -205,7 +313,6 @@ export class CourtComponent implements OnInit {
         80, 
         50
       ),
-      // 2. Left Wing 3
       new CourtSection(
         2, 
         SectionType.LeftWing3,
@@ -213,7 +320,6 @@ export class CourtComponent implements OnInit {
         120, 
         330
       ),
-      // 3-14. Additional court sections...
       new CourtSection(
         3, 
         SectionType.TopKey3,
@@ -260,28 +366,28 @@ export class CourtComponent implements OnInit {
         9, 
         SectionType.RightWing2,
         'm 388.57775,242.91194 c -5.37932,-16.83502 -9.39744,-30.96522 -8.92916,-31.40046 0.46827,-0.43524 4.22641,-2.25338 8.35141,-4.0403 22.7174,-9.84103 45.8307,-26.93428 61.04873,-45.14807 l 4.74317,-5.67688 24.57262,19.05134 c 21.98925,17.04844 24.46306,19.25607 23.53047,20.99864 -2.08039,3.88725 -29.64423,31.25687 -39.39499,39.1174 -14.10275,11.36888 -31.82484,22.74145 -47,30.16071 -7.15,3.4957 -13.93188,6.62377 -15.07084,6.95127 -1.92602,0.55382 -2.75479,-1.54504 -11.85141,-30.01365 z',
-        430, 
+        430,
         220
       ),
       new CourtSection(
-        10, 
+        10,
         SectionType.RightDeep2,
         'm 481.27818,172.6719 c -13.31281,-10.26955 -24.22155,-18.99537 -24.24165,-19.39072 -0.0201,-0.39535 1.98829,-3.84886 4.46306,-7.67448 16.22979,-25.08867 24.50708,-53.290523 24.49451,-83.456073 -0.007,-16.276289 -1.78694,-29.792059 -5.42412,-41.182362 -1.39945,-4.382546 -2.55019,-8.305765 -2.55721,-8.718265 -0.007,-0.4125 12.61882,-0.75 28.05744,-0.75 h 28.0702 l -0.66833,60.25 c -0.36759,33.1375 -1.01253,63.90612 -1.43322,68.37471 -0.64064,6.80495 -1.58635,9.84438 -5.82204,18.7114 -4.65472,9.74425 -16.67376,29.13838 -19.52348,31.50343 -0.8724,0.72403 -7.9644,-4.20606 -25.41516,-17.66764 z',
-        500, 
+        500,
         120
       ),
       new CourtSection(
-        11, 
+        11,
         SectionType.LeftShort2,
         'M 223.54791,193.91166 C 182.86294,169.02224 156.45492,131.45995 148.38411,87 c -1.37812,-7.591722 -1.79453,-14.696143 -1.72908,-29.5 0.0884,-19.999639 1.23958,-28.878672 5.25074,-40.5 l 1.72578,-5 45.27335,-0.260252 45.27335,-0.260251 -5.15206,5.760251 C 233.21015,23.742377 226.7673,36.053277 224.49801,45 c -5.23169,20.625999 -1.28504,43.018064 10.78082,61.16707 4.2095,6.33178 15.22815,17.89531 20.46686,21.47898 l 2.24569,1.53622 -12.20566,35.15886 c -6.71311,19.33738 -12.44867,35.13371 -12.74569,35.10296 -0.29702,-0.0307 -4.56847,-2.52034 -9.49212,-5.53243 z', 
-        190, 
+        190,
         50
       ),
       new CourtSection(
-        12, 
+        12,
         SectionType.CenterShort2,
         'm 294,217.90716 c -1.375,-0.24074 -6.775,-1.15611 -12,-2.03417 -10.49169,-1.76311 -33.06037,-8.79698 -40.10734,-12.50006 L 237.37696,201 249.43848,166.36508 261.5,131.73017 l 7.5,3.76615 c 27.90237,14.01125 63.21512,14.52492 90.83049,1.32123 l 8.0696,-3.85831 11.5702,33.52038 c 6.36361,18.43621 11.56108,33.8767 11.54995,34.3122 -0.0302,1.18017 -11.66684,6.18074 -22.33629,9.59847 -18.6738,5.98176 -27.24933,7.27241 -50.68395,7.62817 -11.825,0.17952 -22.625,0.12943 -24,-0.1113 z', 
-        315, 
+        315,
         170
       ),
       new CourtSection(
@@ -292,12 +398,19 @@ export class CourtComponent implements OnInit {
         50
       ),
       new CourtSection(
-        14, 
+        14,
         SectionType.Layup,
         'M 297.89434,141.01053 C 278.32439,137.29527 262.02189,128.74281 248.48696,115.09092 233.45165,99.925696 226.53282,83.790702 226.57871,64 c 0.043,-18.537691 5.44517,-32.881862 17.14145,-45.514925 L 250.18727,11.5 h 64.28524 64.28523 l 6.53059,6.922765 C 397.95761,31.852874 403.92048,44.931136 404.70088,61 c 0.8519,17.541139 -3.95955,32.328844 -15.37707,47.26053 -10.73345,14.03706 -30.31717,26.4645 -49.32381,31.29992 -11.03843,2.80825 -31.27969,3.50534 -42.10566,1.45008 z', 
-        315, 
+        315,
         70
       ),
+      new CourtSection(
+        15,
+        SectionType.FreeThrow,
+        '', // No path needed since it's not a visible court section
+        540,
+        440
+      )
     ];
   }
 }

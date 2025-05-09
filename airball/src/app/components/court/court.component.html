@@ -67,7 +67,13 @@
 
     <!-- Section labels -->
     @for (section of courtSections; track section.id) {
-      <g class="label-container">
+      <g 
+        class="label-container"
+        (click)="handleLabelClick(section.id, $event)"
+        (touchend)="onLabelTouch($event, section.id)"
+        [class.label-selected]="isSelected(section.id)"
+        style="cursor: pointer;"
+      >
         <!-- Background rectangle -->
         <rect 
           [attr.x]="section.labelX - 30"
@@ -105,5 +111,33 @@
         >{{section.percentage.toFixed(2)}}%</text>
       </g>
     }
+    <!-- Free Throw FAB button -->
+    <g 
+      class="free-throw-button"
+      (click)="handleFreeThrowClick($event)"
+      (touchend)="onFreeThrowTouch($event)"
+      [class.selected]="selectedSection === getFreeThrowSectionId()"
+    >
+      <!-- Background circle with black border and dynamic fill -->
+      <circle 
+        cx="495" 
+        cy="440" 
+        r="20" 
+        [attr.fill]="getFreeThrowFillColor()"
+        stroke="black" 
+        stroke-width="2" 
+      />
+      <!-- Text that's also clickable -->
+      <text 
+        x="495" 
+        y="440" 
+        fill="white" 
+        text-anchor="middle" 
+        dominant-baseline="central"
+        font-size="14"
+        font-weight="bold"
+        pointer-events="none"
+      >FT</text>
+    </g>
   </svg>
 </div>

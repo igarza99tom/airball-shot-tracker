@@ -39,13 +39,20 @@
 }
 
 // Stats label styling
-.label-container {
-  pointer-events: none; // Prevent labels from blocking clicks
-}
-
 .label-background {
   opacity: 0.7;
   filter: drop-shadow(0px 1px 2px rgba(0,0,0,0.2));
+}
+
+// Stats label styling
+.label-container {
+  transition: transform 0.2s ease;
+  
+  &.label-selected {
+    .label-background {
+      opacity: 0.9;
+    }
+  }
 }
 
 // Animations for selected section
@@ -96,5 +103,30 @@
       fill: var(--section-color);
       stroke-width: 1;
     }
+  }
+}
+
+.free-throw-button {
+  cursor: pointer;
+  filter: drop-shadow(0px 2px 3px rgba(0,0,0,0.3));
+  
+  &:active {
+    opacity: 0.8;
+  }
+  
+  &.selected {
+    circle {
+      animation: ft-button-breathing 3s infinite ease-in-out;
+    }
+  }
+}
+
+// Fixed animation syntax
+@keyframes ft-button-breathing {
+  0%, 100% {
+    stroke: black;
+  }
+  50% {
+    stroke: white;
   }
 }

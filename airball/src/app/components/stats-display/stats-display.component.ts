@@ -222,4 +222,54 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
       .sort((a, b) => a.percentage - b.percentage)
       .slice(0, 3); // Return bottom 3
   }
+
+  // Add properties
+isFreethrowExpanded: boolean = false;
+
+/**
+ * Toggle expanded state for free throws
+ */
+toggleFreeThrowExpanded(): void {
+  this.isFreethrowExpanded = !this.isFreethrowExpanded;
+}
+
+/**
+ * Get free throw section
+ */
+getFreeThrowSection(): CourtSection | undefined {
+  return this.allSections.find(section => section.type === SectionType.FreeThrow);
+}
+
+/**
+ * Get free throw statistics
+ */
+getFreeThrowStats() {
+  const section = this.getFreeThrowSection();
+  return section ? {
+    shots: section.total,
+    makes: section.make,
+    percentage: section.total > 0 ? (section.percentage).toFixed(2) : "0.00"
+  } : {
+    shots: 0,
+    makes: 0,
+    percentage: "0.00"
+  };
+}
+
+/**
+ * Check if any free throws have been attempted
+ */
+hasFreethrowAttempts(): boolean {
+  const section = this.getFreeThrowSection();
+  return !!section && section.total > 0;
+}
+
+/**
+ * Check if any 3pt shots have been attempted
+ */
+has3ptAttempts(): boolean {
+  const sections = this.get3ptSections();
+  const totalShots = sections.reduce((sum, section) => sum + section.total, 0);
+  return totalShots > 0;
+}
 }
