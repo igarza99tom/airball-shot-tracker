@@ -151,7 +151,7 @@ export class CourtComponent implements OnInit {
   }
   
   /**
-   * Gets color based on shooting percentage
+   * Gets color based on shooting percentage with different thresholds for different section types
    */
   private getPercentageBasedColor(section: CourtSection): string {
     // Default light color when no shots attempted
@@ -160,15 +160,51 @@ export class CourtComponent implements OnInit {
     // Return color based on shooting percentage if shots attempted
     if (section.total > 0) {
       const percentage = section.percentage;
-      if (percentage >= 60) return 'rgba(0,200,0,0.3)';
-      if (percentage >= 40) return 'rgba(144,238,144,0.4)';
-      if (percentage >= 30) return 'rgba(255,255,0,0.3)';
-      return 'rgba(255, 0, 0, 0.3)';
+      
+      // 3-pointers (sections 1-5)
+      if (section.id >= 1 && section.id <= 5) {
+        if (percentage >= 45) return 'rgba(0,200,0,0.3)';
+        if (percentage >= 35) return 'rgba(144,238,144,0.4)';
+        if (percentage >= 25) return 'rgba(255,255,0,0.3)';
+        return 'rgba(255, 0, 0, 0.3)';
+      }
+      
+      // Long 2-pointers (sections 6-10)
+      else if (section.id >= 6 && section.id <= 10) {
+        if (percentage >= 50) return 'rgba(0,200,0,0.3)';
+        if (percentage >= 40) return 'rgba(144,238,144,0.4)';
+        if (percentage >= 30) return 'rgba(255,255,0,0.3)';
+        return 'rgba(255, 0, 0, 0.3)';
+      }
+      
+      // Short 2-pointers (sections 11-13)
+      else if (section.id >= 11 && section.id <= 13) {
+        if (percentage >= 55) return 'rgba(0,200,0,0.3)';
+        if (percentage >= 45) return 'rgba(144,238,144,0.4)';
+        if (percentage >= 35) return 'rgba(255,255,0,0.3)';
+        return 'rgba(255, 0, 0, 0.3)';
+      }
+      
+      // Layups (section 14)
+      else if (section.id === 14) {
+        if (percentage >= 60) return 'rgba(0,200,0,0.3)';
+        if (percentage >= 50) return 'rgba(144,238,144,0.4)';
+        if (percentage >= 40) return 'rgba(255,255,0,0.3)';
+        return 'rgba(255, 0, 0, 0.3)';
+      }
+      
+      // Free throws (section 15)
+      else if (section.id === 15) {
+        if (percentage >= 80) return 'rgba(0,200,0,0.3)';
+        if (percentage >= 65) return 'rgba(144,238,144,0.4)';
+        if (percentage >= 50) return 'rgba(255,255,0,0.3)';
+        return 'rgba(255, 0, 0, 0.3)';
+      }
     }
     
     return baseColor;
   }
-  
+
   /**
    * Detects if the current device is a touch device
    */
@@ -232,7 +268,7 @@ export class CourtComponent implements OnInit {
 
   /**
    * Gets the fill color for the free throw button based on the percentage
-   * Red for 0-33%, Yellow for 34-66%, Green for 67-100%
+   * with thresholds consistent with getPercentageBasedColor
    */
   getFreeThrowFillColor(): string {
     const freeThrowSection = this.courtSections.find(s => s.type === SectionType.FreeThrow);
@@ -243,12 +279,15 @@ export class CourtComponent implements OnInit {
     
     const percentage = freeThrowSection.percentage;
     
-    if (percentage < 33.33) {
-      return '#e74c3c'; // Red for low percentage
-    } else if (percentage < 66.67) {
+    // Use the same thresholds as in getPercentageBasedColor for free throws
+    if (percentage >= 80) {
+      return '#2ecc71'; // Green for high percentage
+    } else if (percentage >= 65) {
+      return '#58bf85'; // Medium-high green
+    } else if (percentage >= 50) {
       return '#f39c12'; // Yellow/Orange for medium percentage
     } else {
-      return '#2ecc71'; // Green for high percentage
+      return '#e74c3c'; // Red for low percentage
     }
   }
 
@@ -393,7 +432,7 @@ export class CourtComponent implements OnInit {
       new CourtSection(
         13, 
         SectionType.RightShort2,
-        'M 383.63405,165.76278 C 377.22162,147.19325 372.00657,131.55 372.04505,131 c 0.0385,-0.55 3.00935,-3.25 6.60195,-6 17.93449,-13.7282 29.04317,-34.610126 30.10835,-56.597215 0.97543,-20.134443 -5.29156,-36.804444 -19.61051,-52.163292 l -4.43818,-4.760507 44.30143,0.260507 L 473.30951,12 l 1.89709,5.5 c 5.38976,15.625931 6.23226,21.477076 6.26356,43.5 0.0318,22.410646 -0.80299,28.65636 -6.1486,46 -3.99655,12.96663 -14.30878,32.77639 -23.20888,44.58417 -13.20842,17.52361 -32.14297,34.08417 -51.21617,44.79474 l -5.6035,3.14664 z',
+        'M 383.63405,165.76278 C 377.22162,147.19325 372.00657,131.55 372.04505,131 c 0.0385,-0.55 3.00935,-3.25 6.60195,-6 17.93449,-13.7282 29.04317,-34.610126 30.10835,-56.597215 0.97543,-20.134443 -5.29156,-36.804444 -19.61051,-52.163292 l -4.43818,-4.760507 44.30143,0.260507 L 473.30951,12 l 1.89709,5.5 c 5.38976,15.625931 6.23226,21.477076 6.26356,43.5 0.0318,22.410646 -0.80299,28.65636 -6.1486,46 -3.99655,12.96663 -14.30878,32.77639 -23.20888,44.58417 -13.20842,17.52361 -32.14297,34.08417 -51.21617,44.79474 -5.6035,3.14664 z',
         435, 
         50
       ),
