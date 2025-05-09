@@ -45,9 +45,7 @@
 }
 
 // Stats label styling
-.label-container {
-  transition: transform 0.2s ease;
-  
+.label-container {  
   &.label-selected {
     .label-background {
       opacity: 0.9;
