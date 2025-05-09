@@ -23,7 +23,7 @@
   <!-- Statistical breakdown by section type -->
   <div class="stats-card stats-table">
     <div class="header-row">
-      <h2>Shot Stats</h2>
+      <h2>Shoting Splits</h2>
       <button class="toggle-btn" (click)="toggleStatsExpanded()">
         {{ statsExpanded ? 'Collapse' : 'Expand' }}
       </button>
@@ -33,7 +33,7 @@
     <div class="stat-category">
       <div class="stat-row">
         <div class="category-header">
-          <h3>Total Shots</h3>
+          <h3>Field Goals</h3>
         </div>
         <div class="stat-grid">
           <div class="stat-item">
@@ -41,7 +41,7 @@
             <div class="stat-value">{{ getTotalStats().makes }}</div>
           </div>
           <div class="stat-item">
-            <div class="stat-label">Total</div>
+            <div class="stat-label">Attempted</div>
             <div class="stat-value">{{ getTotalStats().shots }}</div>
           </div>
           <div class="stat-item">
@@ -52,51 +52,12 @@
       </div>
     </div>
 
-    <!-- Free Throws (conditionally visible) -->
-    @if (hasFreethrowAttempts()) {
-      <div class="stat-category">
-        <div class="stat-row">
-          <div class="category-header" (click)="toggleFreeThrowExpanded()">
-            <h3>Free Throws</h3>
-            <span class="toggle-icon">{{ isFreethrowExpanded ? '−' : '+' }}</span>
-          </div>
-          <div class="stat-grid">
-            <div class="stat-item">
-              <div class="stat-label">Makes</div>
-              <div class="stat-value">{{ getFreeThrowStats().makes }}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Total</div>
-              <div class="stat-value">{{ getFreeThrowStats().shots }}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Percentage</div>
-              <div class="stat-value">{{ getFreeThrowStats().percentage }}%</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Expanded free throw details -->
-        @if (isFreethrowExpanded) {
-          <div class="expanded-sections">
-            <div class="section-row">
-              <span class="section-name">Free Throw</span>
-              <span class="section-stats">
-                {{ getFreeThrowStats().makes }}/{{ getFreeThrowStats().shots }} 
-                ({{ getFreeThrowStats().percentage }}%)
-              </span>
-            </div>
-          </div>
-        }
-      </div>
-    }
-
     <!-- 3 Point Shots (conditionally visible) -->
     @if (has3ptAttempts()) {
       <div class="stat-category">
         <div class="stat-row">
           <div class="category-header" (click)="toggle3ptExpanded()">
-            <h3>3-Point Shots</h3>
+            <h3>3 Points</h3>
             <span class="toggle-icon">{{ is3ptExpanded ? '−' : '+' }}</span>
           </div>
           <div class="stat-grid">
@@ -105,7 +66,7 @@
               <div class="stat-value">{{ get3ptStats().makes }}</div>
             </div>
             <div class="stat-item">
-              <div class="stat-label">Total</div>
+              <div class="stat-label">Attempted</div>
               <div class="stat-value">{{ get3ptStats().shots }}</div>
             </div>
             <div class="stat-item">
@@ -128,12 +89,13 @@
         }
       </div>
     }
+    
     <!-- Mid Range Shots (conditionally visible) -->
     @if (statsExpanded) {
       <div class="stat-category">
         <div class="stat-row">
           <div class="category-header" (click)="toggleMidRangeExpanded()">
-            <h3>Mid-Range Shots</h3>
+            <h3>Mid Range</h3>
             <span class="toggle-icon">{{ isMidRangeExpanded ? '−' : '+' }}</span>
           </div>
           <div class="stat-grid">
@@ -142,7 +104,7 @@
               <div class="stat-value">{{ getMidRangeStats().makes }}</div>
             </div>
             <div class="stat-item">
-              <div class="stat-label">Total</div>
+              <div class="stat-label">Attempted</div>
               <div class="stat-value">{{ getMidRangeStats().shots }}</div>
             </div>
             <div class="stat-item">
@@ -169,7 +131,7 @@
       <div class="stat-category">
         <div class="stat-row">
           <div class="category-header" (click)="togglePaintExpanded()">
-            <h3>Paint Shots</h3>
+            <h3>Paint</h3>
             <span class="toggle-icon">{{ isPaintExpanded ? '−' : '+' }}</span>
           </div>
           <div class="stat-grid">
@@ -178,7 +140,7 @@
               <div class="stat-value">{{ getPaintStats().makes }}</div>
             </div>
             <div class="stat-item">
-              <div class="stat-label">Total</div>
+              <div class="stat-label">Attempted</div>
               <div class="stat-value">{{ getPaintStats().shots }}</div>
             </div>
             <div class="stat-item">
@@ -197,6 +159,44 @@
                 <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
               </div>
             }
+          </div>
+        }
+      </div>
+    }
+    <!-- Free Throws (conditionally visible) -->
+    @if (hasFreethrowAttempts()) {
+      <div class="stat-category">
+        <div class="stat-row">
+          <div class="category-header" (click)="toggleFreeThrowExpanded()">
+            <h3 class="wrap-text">Free Throws</h3>
+            <span class="toggle-icon">{{ isFreethrowExpanded ? '−' : '+' }}</span>
+          </div>
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-label">Makes</div>
+              <div class="stat-value">{{ getFreeThrowStats().makes }}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Attempted</div>
+              <div class="stat-value">{{ getFreeThrowStats().shots }}</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-label">Percentage</div>
+              <div class="stat-value">{{ getFreeThrowStats().percentage }}%</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Expanded free throw details -->
+        @if (isFreethrowExpanded) {
+          <div class="expanded-sections">
+            <div class="section-row">
+              <span class="section-name">Free Throw</span>
+              <span class="section-stats">
+                {{ getFreeThrowStats().makes }}/{{ getFreeThrowStats().shots }} 
+                ({{ getFreeThrowStats().percentage }}%)
+              </span>
+            </div>
           </div>
         }
       </div>
@@ -253,4 +253,4 @@
   }
 </div>
 
-  
+

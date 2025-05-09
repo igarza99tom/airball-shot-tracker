@@ -98,9 +98,12 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
       };
     }
     
-    // Calculate totals across all sections
-    const totalShots = this.allSections.reduce((sum, section) => sum + section.total, 0);
-    const totalMakes = this.allSections.reduce((sum, section) => sum + section.make, 0);
+    // Filter out free throw sections for total field goal statistics
+    const fieldGoalSections = this.allSections.filter(section => section.type !== SectionType.FreeThrow);
+    
+    // Calculate totals across all field goal sections (excluding free throws)
+    const totalShots = fieldGoalSections.reduce((sum, section) => sum + section.total, 0);
+    const totalMakes = fieldGoalSections.reduce((sum, section) => sum + section.make, 0);
     
     // Calculate overall percentage
     const percentage = totalShots > 0 ? (totalMakes / totalShots) * 100 : 0;
@@ -187,20 +190,22 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
    * Get all valid sections for ranking (with minimum attempts)
    */
   private getValidSectionsForRanking(): CourtSection[] {
-    // Only include sections with at least 5 attempts
-    return this.allSections.filter(section => section.total >= 5);
+    // Only include field goal sections (exclude free throws) with at least 5 attempts
+    return this.allSections.filter(section => 
+      section.total >= 5 && section.type !== SectionType.FreeThrow);
   }
 
   /**
    * Checks if there are any valid sections for best/worst spots
    */
   hasValidSectionsForRanking(): boolean {
-    // Only consider sections with at least 5 attempts as valid for ranking
-    return this.allSections.some(section => section.total >= 5);
+    // Only consider field goal sections with at least 5 attempts as valid for ranking
+    return this.allSections.some(section => 
+      section.total >= 5 && section.type !== SectionType.FreeThrow);
   }
 
   /**
-   * Get the best shooting spots (min 5 attempts)
+   * Get the best shooting spots (min 5 attempts, excluding free throws)
    */
   getBestSpots(): CourtSection[] {
     const validSections = this.getValidSectionsForRanking();
@@ -212,7 +217,7 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Get the worst shooting spots (min 5 attempts)
+   * Get the worst shooting spots (min 5 attempts, excluding free throws)
    */
   getWorstSpots(): CourtSection[] {
     const validSections = this.getValidSectionsForRanking();
@@ -224,52 +229,52 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
   }
 
   // Add properties
-isFreethrowExpanded: boolean = false;
+  isFreethrowExpanded: boolean = false;
 
-/**
- * Toggle expanded state for free throws
- */
-toggleFreeThrowExpanded(): void {
-  this.isFreethrowExpanded = !this.isFreethrowExpanded;
-}
+  /**
+   * Toggle expanded state for free throws
+   */
+  toggleFreeThrowExpanded(): void {
+    this.isFreethrowExpanded = !this.isFreethrowExpanded;
+  }
 
-/**
- * Get free throw section
- */
-getFreeThrowSection(): CourtSection | undefined {
-  return this.allSections.find(section => section.type === SectionType.FreeThrow);
-}
+  /**
+   * Get free throw section
+   */
+  getFreeThrowSection(): CourtSection | undefined {
+    return this.allSections.find(section => section.type === SectionType.FreeThrow);
+  }
 
-/**
- * Get free throw statistics
- */
-getFreeThrowStats() {
-  const section = this.getFreeThrowSection();
-  return section ? {
-    shots: section.total,
-    makes: section.make,
-    percentage: section.total > 0 ? (section.percentage).toFixed(2) : "0.00"
-  } : {
-    shots: 0,
-    makes: 0,
-    percentage: "0.00"
-  };
-}
+  /**
+   * Get free throw statistics
+   */
+  getFreeThrowStats() {
+    const section = this.getFreeThrowSection();
+    return section ? {
+      shots: section.total,
+      makes: section.make,
+      percentage: section.total > 0 ? (section.percentage).toFixed(2) : "0.00"
+    } : {
+      shots: 0,
+      makes: 0,
+      percentage: "0.00"
+    };
+  }
 
-/**
- * Check if any free throws have been attempted
- */
-hasFreethrowAttempts(): boolean {
-  const section = this.getFreeThrowSection();
-  return !!section && section.total > 0;
-}
+  /**
+   * Check if any free throws have been attempted
+   */
+  hasFreethrowAttempts(): boolean {
+    const section = this.getFreeThrowSection();
+    return !!section && section.total > 0;
+  }
 
-/**
- * Check if any 3pt shots have been attempted
- */
-has3ptAttempts(): boolean {
-  const sections = this.get3ptSections();
-  const totalShots = sections.reduce((sum, section) => sum + section.total, 0);
-  return totalShots > 0;
-}
+  /**
+   * Check if any 3pt shots have been attempted
+   */
+  has3ptAttempts(): boolean {
+    const sections = this.get3ptSections();
+    const totalShots = sections.reduce((sum, section) => sum + section.total, 0);
+    return totalShots > 0;
+  }
 }

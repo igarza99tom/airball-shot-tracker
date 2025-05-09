@@ -1,72 +1,68 @@
+@use '../../shared/styles/stats-shared' as stats;
+
+// Core styles with optimized selectors and values
 .stats-container {
   width: 100%;
   margin: 0 auto;
 }
 
 .stats-card {
-  background: white;
+  background: #fff;
   border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  @include stats.card-shadow;
   padding: 15px;
   margin-bottom: 15px;
   
-  &:last-child {
-    margin-bottom: 0;
-  }
+  &:last-child { margin-bottom: 0; }
   
   h2 {
-    color: #333;
+    color: stats.$header-color;
     font-size: 18px;
     margin: 0 0 15px;
     padding-bottom: 8px;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: stats.$border-light;
   }
 }
 
-// Table-like stats layout
-.stats-table {
-  .header-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-    h2 {
-      margin: 0;
-      padding: 0;
-      border: none;
-    }
-  }
+// Stats table layout
+.stats-table .header-row {
+  @include stats.flex-between;
+  align-items: center;
   
-  .toggle-btn {
-    background: #f0f0f0;
-    border: none;
-    padding: 5px 12px;
-    border-radius: 4px;
-    color: #333;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    
-    &:hover {
-      background: #e0e0e0;
-    }
+  h2 {
+    margin: 0;
+    padding: 0;
+    border: 0;
   }
 }
 
-// Category sections
+// Toggle button
+.toggle-btn {
+  background: #f0f0f0;
+  border: 0;
+  padding: 5px 12px;
+  border-radius: 4px;
+  color: stats.$header-color;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all .2s;
+  
+  &:hover { background: #e0e0e0; }
+}
+
+// Category and rows
 .stat-category {
   margin-bottom: 15px;
   padding-bottom: 15px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: stats.$border-light;
   
   &:last-child {
     margin-bottom: 0;
     padding-bottom: 0;
-    border-bottom: none;
+    border-bottom: 0;
   }
 }
 
-// New stat row layout - puts category header and stat items in same row
 .stat-row {
   display: flex;
   align-items: center;
@@ -75,85 +71,94 @@
 .category-header {
   display: flex;
   align-items: center;
-  min-width: 140px;
-  padding-right: 15px;
+  width: 90px;
+  min-width: 90px;
+  padding-right: 10px;
   cursor: pointer;
+  flex-shrink: 0;
   
   h3 {
     margin: 0;
     font-size: 16px;
-    color: #444;
-    white-space: nowrap;
+    color: stats.$subheader-color;
+    word-break: break-word;
+    line-height: 1.2;
   }
   
   .toggle-icon {
     font-size: 18px;
     font-weight: bold;
-    color: #777;
-    margin-left: 8px;
+    color: stats.$muted-color;
+    margin-left: 5px;
+    flex-shrink: 0;
   }
   
-  &:hover {
-    opacity: 0.85;
-  }
+  &:hover { opacity: .85; }
 }
 
-// Stats grid
+// Stats display
 .stat-grid {
   display: flex;
-  flex-grow: 1;
+  flex: 1;
   justify-content: space-around;
   text-align: center;
+  min-width: 0;
 }
 
 .stat-item {
   flex: 1;
-  padding: 0 5px;
+  padding: 0 3px;
+  min-width: 0;
   
   .stat-label {
-    font-size: 12px;
-    color: #777;
-    margin-bottom: 5px;
+    font-size: 11px;
+    color: stats.$muted-color;
+    margin-bottom: 3px;
+    @include stats.text-ellipsis;
   }
   
   .stat-value {
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
-    color: #ff7700;
+    color: stats.$accent-color;
+    white-space: nowrap;
   }
 }
 
-// Expanded sections
+// Section styles
 .expanded-sections {
-  background-color: rgba(0, 0, 0, 0.02);
+  background-color: rgba(0,0,0,.02);
   border-radius: 8px;
   padding: 8px 12px;
-  margin: 0 5px 10px 5px;
+  margin: 0 5px 10px;
   
   .section-row {
-    display: flex;
-    justify-content: space-between;
+    @include stats.flex-between;
     padding: 5px 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom: stats.$border-lighter;
     
-    &:last-child {
-      border-bottom: none;
-    }
-    
-    .section-name {
-      font-size: 13px;
-      color: #555;
-    }
-    
-    .section-stats {
-      font-size: 13px;
-      color: #444;
-      font-weight: 500;
-    }
+    &:last-child { border-bottom: 0; }
+  }
+  
+  .section-name {
+    font-size: 13px;
+    color: #555;
+    max-width: 50%;
+    word-wrap: break-word;
+    hyphens: auto;
+    padding-right: 8px;
+  }
+  
+  .section-stats {
+    font-size: 13px;
+    color: stats.$subheader-color;
+    font-weight: 500;
+    white-space: nowrap;
+    text-align: right;
   }
 }
 
-// Side-by-side stats layout
+// Layout helpers
 .stats-row-container {
   display: flex;
   margin: 0 -7px;
@@ -163,55 +168,43 @@
 .half-width {
   flex: 1 1 calc(50% - 14px);
   margin: 0 7px;
-  min-width: 260px;
-  
-  @media (max-width: 680px) {
-    flex: 1 1 100%;
-    margin-bottom: 15px;
-  }
+  min-width: 150px;
 }
 
-// Ranking item styling
+// Rankings
 .ranking-list {
   .ranking-item {
-    display: flex;
-    justify-content: space-between;
+    @include stats.flex-between;
     align-items: center;
     padding: 8px 0;
-    border-bottom: 1px solid #f0f0f0;
+    border-bottom: stats.$border-light;
     
-    &:last-child {
-      border-bottom: none;
-    }
+    &:last-child { border-bottom: 0; }
   }
   
   .ranking-info {
     display: flex;
     align-items: center;
+    max-width: 50%;
     
     .ranking-badge {
-      width: 24px;
-      height: 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include stats.badge;
       margin-right: 10px;
-      font-weight: bold;
-      font-size: 12px;
-      color: white;
+      flex-shrink: 0;
       
       &.success {
-        background: #2ecc71;
+        background: stats.$success-color;
       }
       
       &.danger {
-        background: #e74c3c;
+        background: stats.$danger-color;
       }
     }
     
     .ranking-name {
       font-size: 14px;
+      word-wrap: break-word;
+      hyphens: auto;
     }
   }
   
@@ -219,12 +212,12 @@
     display: flex;
     flex-direction: column;
     align-items: flex-end;
-    min-width: 120px;
+    min-width: 90px;
     
     .ranking-percentage {
       font-weight: bold;
       font-size: 16px;
-      color: #333;
+      color: stats.$header-color;
     }
     
     .ranking-fraction {
@@ -233,15 +226,9 @@
       margin-bottom: 3px;
     }
   }
-  
-  .empty-state {
-    color: #999;
-    text-align: center;
-    padding: 15px 0;
-    font-style: italic;
-  }
 }
 
+// Percentage bars
 .percentage-bar-container {
   width: 100%;
   height: 6px;
@@ -254,31 +241,45 @@
     border-radius: 3px;
     
     &.success {
-      background: #2ecc71;
+      background: stats.$success-color;
     }
     
     &.danger {
-      background: #e74c3c;
+      background: stats.$danger-color;
     }
   }
 }
 
-// Responsive adjustments
+// Media queries - consolidated
 @media (max-width: 580px) {
-  // Switch to vertical layout on smaller screens
-  .stat-row {
-    flex-direction: column;
-    align-items: flex-start;
+  .percentage-bar-container { width: 60px; }
+}
+
+@media (max-width: 430px) {
+  .half-width { 
+    flex: 1 1 100%; 
+    margin-bottom: 15px;
   }
-  
+}
+
+@media (max-width: 380px) {
+  .stat-row { flex-direction: column; align-items: flex-start; }
   .category-header {
     width: 100%;
-    padding-right: 0;
-    padding-bottom: 8px;
+    padding: 0 0 8px;
     justify-content: space-between;
   }
-  
-  .stat-grid {
-    width: 100%;
+  .stat-grid { width: 100%; }
+  .stat-label { font-size: 12px; }
+  .stat-value { font-size: 20px; }
+}
+
+@media (min-width: 381px) and (max-width: 520px) {
+  .stat-label { font-size: 10px; }
+  .stat-value { font-size: 16px; }
+  .category-header {
+    width: 75px;
+    min-width: 75px;
+    h3 { font-size: 14px; }
   }
 }

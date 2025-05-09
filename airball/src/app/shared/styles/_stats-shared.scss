@@ -1,0 +1,36 @@
+// Common variables and styles for stats components
+$border-light: 1px solid #f0f0f0;
+$border-lighter: 1px solid rgba(0,0,0,.05);
+$success-color: #2ecc71;
+$danger-color: #e74c3c;
+$header-color: #333;
+$subheader-color: #444;
+$muted-color: #777;
+$accent-color: #f70;
+
+@mixin card-shadow {
+  box-shadow: 0 4px 15px rgba(0,0,0,.1);
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+
+@mixin text-ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin badge {
+  min-width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+}
