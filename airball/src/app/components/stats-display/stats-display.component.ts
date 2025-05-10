@@ -3,11 +3,17 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { CourtSelectionService } from '../../services/court-selection.service';
 import { CourtSection, SectionType } from '../../models/court-section.model';
+import { SectionStatsEditComponent } from '../section-stats-edit/section-stats-edit.component';
+
+interface SectionStats {
+  makes: number;
+  total: number;
+}
 
 @Component({
   selector: 'app-stats-display',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, SectionStatsEditComponent],
   templateUrl: './stats-display.component.html',
   styleUrl: './stats-display.component.scss'
 })
@@ -21,13 +27,27 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
   is3ptExpanded: boolean = false;
   isMidRangeExpanded: boolean = false;
   isPaintExpanded: boolean = false;
+  isFreethrowExpanded: boolean = false;
+
+  // Add property for edit mode
+  sectionStatsEditable: boolean = false;
   
   constructor(private courtSelectionService: CourtSelectionService) {}
   
+  /**
+   * Subscribe to section changes
+   */
   ngOnInit() {
     // Subscribe to section changes
     this.subscription.add(
       this.courtSelectionService.selectedSection$.subscribe(section => {
+        // Check if the section has changed while in edit mode
+        if (this.sectionStatsEditable && 
+           (!section || this.selectedSection?.id !== section?.id)) {
+          // Cancel edit mode when section changes
+          this.sectionStatsEditable = false;
+        }
+        
         this.selectedSection = section;
       })
     );
@@ -70,6 +90,59 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
    */
   togglePaintExpanded(): void {
     this.isPaintExpanded = !this.isPaintExpanded;
+  }
+
+  /**
+   * Toggle expanded state for free throws
+   */
+  toggleFreeThrowExpanded(): void {
+    this.isFreethrowExpanded = !this.isFreethrowExpanded;
+  }
+  
+  /**
+   * Toggle section stats edit mode
+   */
+  toggleSectionStatsEdit(): void {
+    this.sectionStatsEditable = !this.sectionStatsEditable;
+  }
+  
+  /**
+   * Save changes to section stats
+   */
+  saveSectionChanges(stats: SectionStats): void {
+    if (!this.selectedSection) return;
+    
+    // Reset section to update the stats
+    this.selectedSection.reset();
+    
+    // Apply the new stats
+    if (stats.makes > 0) {
+      // Add makes one by one
+      for (let i = 0; i < stats.makes; i++) {
+        this.selectedSection.addMake();
+      }
+      
+      // Add remaining misses if any
+      const misses = stats.total - stats.makes;
+      for (let i = 0; i < misses; i++) {
+        this.selectedSection.addMiss();
+      }
+    } else if (stats.total > 0) {
+      // All shots were misses
+      for (let i = 0; i < stats.total; i++) {
+        this.selectedSection.addMiss();
+      }
+    }
+    
+    // Exit edit mode
+    this.sectionStatsEditable = false;
+  }
+  
+  /**
+   * Cancel editing section stats
+   */
+  cancelSectionStatsEdit(): void {
+    this.sectionStatsEditable = false;
   }
   
   /**
@@ -226,16 +299,6 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
     return [...validSections]
       .sort((a, b) => a.percentage - b.percentage)
       .slice(0, 3); // Return bottom 3
-  }
-
-  // Add properties
-  isFreethrowExpanded: boolean = false;
-
-  /**
-   * Toggle expanded state for free throws
-   */
-  toggleFreeThrowExpanded(): void {
-    this.isFreethrowExpanded = !this.isFreethrowExpanded;
   }
 
   /**

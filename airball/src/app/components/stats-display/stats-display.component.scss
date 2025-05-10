@@ -36,6 +36,18 @@
   }
 }
 
+// Update the header row styles to be reusable across all cards
+.header-row {
+  @include stats.flex-between;
+  align-items: center;
+  
+  h2 {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+}
+
 // Toggle button
 .toggle-btn {
   background: #f0f0f0;
@@ -48,6 +60,25 @@
   transition: all .2s;
   
   &:hover { background: #e0e0e0; }
+}
+
+// Add edit button styles
+.edit-btn {
+  background: transparent;
+  border: none;
+  color: #777;
+  cursor: pointer;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s;
+  
+  &:hover {
+    background: #f0f0f0;
+    color: stats.$accent-color;
+  }
 }
 
 // Category and rows

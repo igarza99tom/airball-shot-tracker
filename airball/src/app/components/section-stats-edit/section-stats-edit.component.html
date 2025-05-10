@@ -1,0 +1,44 @@
+<div class="stats-card">
+  <div class="header-row">
+    <h2>{{ section.name }} - Manual Input</h2>
+  </div>
+  
+  <div class="edit-grid">
+    <!-- Makes editor -->
+    <div class="edit-item">
+      <div class="edit-label">Makes</div>
+      <input 
+        type="number" 
+        class="number-input" 
+        [(ngModel)]="stats.makes" 
+        min="0" 
+        [max]="stats.total"
+        (change)="validateInputs()"
+      >
+    </div>
+    
+    <!-- Total shots editor -->
+    <div class="edit-item">
+      <div class="edit-label">Attempted</div>
+      <input 
+        type="number" 
+        class="number-input" 
+        [(ngModel)]="stats.total" 
+        min="0"
+        (change)="validateInputs()"
+      >
+    </div>
+    
+    <!-- Percentage display (read-only) -->
+    <div class="edit-item">
+      <div class="edit-label">Shooting %</div>
+      <div class="percentage-display">{{ getPercentage() }}%</div>
+    </div>
+  </div>
+  
+  <!-- Action buttons -->
+  <div class="action-buttons">
+    <button class="btn cancel-btn" (click)="onCancel()">Cancel</button>
+    <button class="btn save-btn" (click)="onSave()">Save</button>
+  </div>
+</div>
