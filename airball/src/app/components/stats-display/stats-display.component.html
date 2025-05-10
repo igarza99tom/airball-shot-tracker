@@ -23,7 +23,7 @@
   <!-- Statistical breakdown by section type -->
   <div class="stats-card stats-table">
     <div class="header-row">
-      <h2>Shoting Splits</h2>
+      <h2>Shooting Splits</h2>
       <button class="toggle-btn" (click)="toggleStatsExpanded()">
         {{ statsExpanded ? 'Collapse' : 'Expand' }}
       </button>
@@ -92,77 +92,83 @@
     
     <!-- Mid Range Shots (conditionally visible) -->
     @if (statsExpanded) {
-      <div class="stat-category">
-        <div class="stat-row">
-          <div class="category-header" (click)="toggleMidRangeExpanded()">
-            <h3>Mid Range</h3>
-            <span class="toggle-icon">{{ isMidRangeExpanded ? '−' : '+' }}</span>
-          </div>
-          <div class="stat-grid">
-            <div class="stat-item">
-              <div class="stat-label">Makes</div>
-              <div class="stat-value">{{ getMidRangeStats().makes }}</div>
+      <!-- Mid Range section -->
+      @if (hasMidRangeAttempts()) {
+        <div class="stat-category">
+          <div class="stat-row">
+            <div class="category-header" (click)="toggleMidRangeExpanded()">
+              <h3>Mid Range</h3>
+              <span class="toggle-icon">{{ isMidRangeExpanded ? '−' : '+' }}</span>
             </div>
-            <div class="stat-item">
-              <div class="stat-label">Attempted</div>
-              <div class="stat-value">{{ getMidRangeStats().shots }}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Percentage</div>
-              <div class="stat-value">{{ getMidRangeStats().percentage }}%</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Expanded mid-range breakdown by section -->
-        @if (isMidRangeExpanded) {
-          <div class="expanded-sections">
-            @for (section of getMidRangeSections(); track section.id) {
-              <div class="section-row">
-                <span class="section-name">{{ section.name }}</span>
-                <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+            <div class="stat-grid">
+              <div class="stat-item">
+                <div class="stat-label">Makes</div>
+                <div class="stat-value">{{ getMidRangeStats().makes }}</div>
               </div>
-            }
+              <div class="stat-item">
+                <div class="stat-label">Attempted</div>
+                <div class="stat-value">{{ getMidRangeStats().shots }}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Percentage</div>
+                <div class="stat-value">{{ getMidRangeStats().percentage }}%</div>
+              </div>
+            </div>
           </div>
-        }
-      </div>
+          
+          <!-- Expanded mid-range breakdown by section -->
+          @if (isMidRangeExpanded) {
+            <div class="expanded-sections">
+              @for (section of getMidRangeSections(); track section.id) {
+                <div class="section-row">
+                  <span class="section-name">{{ section.name }}</span>
+                  <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
       
       <!-- Paint Shots (conditionally visible) -->
-      <div class="stat-category">
-        <div class="stat-row">
-          <div class="category-header" (click)="togglePaintExpanded()">
-            <h3>Paint</h3>
-            <span class="toggle-icon">{{ isPaintExpanded ? '−' : '+' }}</span>
-          </div>
-          <div class="stat-grid">
-            <div class="stat-item">
-              <div class="stat-label">Makes</div>
-              <div class="stat-value">{{ getPaintStats().makes }}</div>
+      @if (hasPaintAttempts()) {
+        <div class="stat-category">
+          <div class="stat-row">
+            <div class="category-header" (click)="togglePaintExpanded()">
+              <h3>Paint</h3>
+              <span class="toggle-icon">{{ isPaintExpanded ? '−' : '+' }}</span>
             </div>
-            <div class="stat-item">
-              <div class="stat-label">Attempted</div>
-              <div class="stat-value">{{ getPaintStats().shots }}</div>
-            </div>
-            <div class="stat-item">
-              <div class="stat-label">Percentage</div>
-              <div class="stat-value">{{ getPaintStats().percentage }}%</div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Expanded paint breakdown by section -->
-        @if (isPaintExpanded) {
-          <div class="expanded-sections">
-            @for (section of getPaintSections(); track section.id) {
-              <div class="section-row">
-                <span class="section-name">{{ section.name }}</span>
-                <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+            <div class="stat-grid">
+              <div class="stat-item">
+                <div class="stat-label">Makes</div>
+                <div class="stat-value">{{ getPaintStats().makes }}</div>
               </div>
-            }
+              <div class="stat-item">
+                <div class="stat-label">Attempted</div>
+                <div class="stat-value">{{ getPaintStats().shots }}</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-label">Percentage</div>
+                <div class="stat-value">{{ getPaintStats().percentage }}%</div>
+              </div>
+            </div>
           </div>
-        }
-      </div>
+          
+          <!-- Expanded paint breakdown by section -->
+          @if (isPaintExpanded) {
+            <div class="expanded-sections">
+              @for (section of getPaintSections(); track section.id) {
+                <div class="section-row">
+                  <span class="section-name">{{ section.name }}</span>
+                  <span class="section-stats">{{ section.make }}/{{ section.total }} ({{ section.percentage.toFixed(1) }}%)</span>
+                </div>
+              }
+            </div>
+          }
+        </div>
+      }
     }
+    
     <!-- Free Throws (conditionally visible) -->
     @if (hasFreethrowAttempts()) {
       <div class="stat-category">

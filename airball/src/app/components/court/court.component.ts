@@ -268,26 +268,26 @@ export class CourtComponent implements OnInit {
 
   /**
    * Gets the fill color for the free throw button based on the percentage
-   * with thresholds consistent with getPercentageBasedColor
+   * with colors consistent with court sections
    */
   getFreeThrowFillColor(): string {
     const freeThrowSection = this.courtSections.find(s => s.type === SectionType.FreeThrow);
     
     if (!freeThrowSection || freeThrowSection.total === 0) {
-      return '#ff7700'; // Default orange color when no shots taken
+      return '#f0bc81'; // Base court color when no shots taken
     }
     
     const percentage = freeThrowSection.percentage;
     
-    // Use the same thresholds as in getPercentageBasedColor for free throws
+    // Use the exact same colors as in getPercentageBasedColor for free throws
     if (percentage >= 80) {
-      return '#2ecc71'; // Green for high percentage
+      return 'rgba(0, 168, 0, 0.9)'; // Green for high percentage (more opaque for button)
     } else if (percentage >= 65) {
-      return '#58bf85'; // Medium-high green
+      return 'rgba(134, 192, 95, 0.9)'; // Light green (more opaque for button)
     } else if (percentage >= 50) {
-      return '#f39c12'; // Yellow/Orange for medium percentage
+      return 'rgb(236, 185, 15)'; // Yellow (more opaque for button)
     } else {
-      return '#e74c3c'; // Red for low percentage
+      return 'rgba(200, 40, 40, 0.9)'; // Red (more opaque for button)
     }
   }
 

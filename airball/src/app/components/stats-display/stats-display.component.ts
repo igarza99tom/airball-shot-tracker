@@ -277,4 +277,31 @@ export class StatsDisplayComponent implements OnInit, OnDestroy {
     const totalShots = sections.reduce((sum, section) => sum + section.total, 0);
     return totalShots > 0;
   }
+
+  /**
+   * Check if any Mid Range shots have been attempted
+   */
+  hasMidRangeAttempts(): boolean {
+    const sections = this.getMidRangeSections();
+    const totalShots = sections.reduce((sum, section) => sum + section.total, 0);
+    return totalShots > 0;
+  }
+  
+  /**
+   * Check if any Free Throws have been attempted
+   */
+  hasFreeThrowAttempts(): boolean {
+    const section = this.getFreeThrowSection();
+    const totalShots = section ? section.total : 0;
+    return totalShots > 0;
+  }
+
+  /**
+   * Check if any Paint shots have been attempted
+   */
+  hasPaintAttempts(): boolean {
+    const sections = this.getPaintSections();
+    const totalShots = sections.reduce((sum, section) => sum + section.total, 0);
+    return totalShots > 0;
+  }
 }
